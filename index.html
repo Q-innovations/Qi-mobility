@@ -13,11 +13,14 @@
         let URL = "https://script.google.com/macros/s/AKfycbx-uByBSgadRv1uDtdvuNzJlv1nXvmm8KKAPokxPSZB7y4xwq_bh5B0eItobHfBAQLx/exec";
 
         let SendDATA = {
-
-          "column_1" : document.getElementById("column_1").value,
-          "column_2" : document.getElementById("column_2").value,
-          "column_3" : document.getElementById("column_3").value,
-          "column_4" : document.getElementById("column_4").value
+          "column_01": document.getElementById("eplace").value,
+                "column_02": document.getElementById("riyokana").value,
+                "column_03": document.getElementById("starttime").value,
+                "column_04": document.getElementById("menu").value,
+          "column_1" : document.getElementById("menu").value,
+          "column_2" : document.getElementById("starttime").value,
+          "column_3" : document.getElementById("riyokana").value,
+          "column_4" : document.getElementById("eplace").value
 
 /*
                 "action":"a",
@@ -44,7 +47,7 @@ window.alert('Error sending message: ' + URL);
       }
       function OnGet(){
 
-        const URL = "https://script.google.com/macros/s/AKfycbx-uByBSgadRv1uDtdvuNzJlv1nXvmm8KKAPokxPSZB7y4xwq_bh5B0eItobHfBAQLx/exec";
+        let URL = "https://script.google.com/macros/s/AKfycbx-uByBSgadRv1uDtdvuNzJlv1nXvmm8KKAPokxPSZB7y4xwq_bh5B0eItobHfBAQLx/exec";
 
         fetch(URL)
         .then(response => {

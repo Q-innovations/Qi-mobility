@@ -8,12 +8,11 @@ window.addEventListener('load', function () {
         , promptPosition: "bottomLeft"
     });
     function beforeCall() {
-        alert('OK!!');
+        //すべてOK!!
+        //alert('OK!!');
     }
-
     // LINEプロフィール取得
     getLineProfile();
-
 
 
     // LINEプロフィール取得
@@ -74,20 +73,15 @@ agreeCheckbox.addEventListener("click", () => {
 
 // 登録ボタン処理
 $('form').submit(function () {
-
-    // UserInfoにデータがない場合
-
-    // UserInfoにデータがある場合
-    // UserInfoスプレッドシート更新
-    //        updateUserInfo();
-
     // sendMessages call
-    //        if (!liff.isInClient()) {
-    if (liff.isInClient()) {
+    //if (liff.isInClient()) {
+    if (!liff.isInClient()) {
         window.alert('LINEから起動してください');
     } else {
         // UserInfoスプレッドシート登録
         insertUserInfo();
+        // UserInfoスプレッドシート更新
+        // updateUserInfo();
         // LINEメッセージ送信
         liff.sendMessages([
             {
@@ -100,24 +94,19 @@ $('form').submit(function () {
                 liff.closeWindow();
             })
             .catch((error) => {
-                window.alert('Error sending message: ' + error);
+                window.alert('LINEsendMessages失敗: ' + error);
             });
     }
     return false;
 
-
-
-
-
-
     // insertUserInfo
     function insertUserInfo() {
-        // ENDPOINTにGASでデプロイしたWebアプリケーションのURL
+        // GASでデプロイしたWebアプリケーションのURL
         // https://ryjkmr.com/gas-web-application-usual-way/
-        let ENDPOINT = "https://script.google.com/macros/s/AKfycbx-uByBSgadRv1uDtdvuNzJlv1nXvmm8KKAPokxPSZB7y4xwq_bh5B0eItobHfBAQLx/exec";
+        let URL = "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
         let SendDATA = {
-            "action": "insertUserInfo",
+            "action": "InsUserinfo",
             "useridprofilefield": document.getElementById("useridprofilefield").value,
             "displaynamefield": document.getElementById("displaynamefield").value,
             "name": document.getElementById("name").value,
@@ -138,8 +127,6 @@ $('form').submit(function () {
             "bd5": document.getElementById("bd5").value,
             "riyo6": document.getElementById("riyo6").value,
             "bd6": document.getElementById("bd6").value
-//            "delflg": 0,
-//            "datetime": 1
         };
         let postparam = {
             "method": "POST",
@@ -147,9 +134,7 @@ $('form').submit(function () {
             "Content-Type": "application/x-www-form-urlencoded",
             "body": JSON.stringify(SendDATA)
         };
-        fetch(UENDPOINTRL, postparam);
-
+        // GAS doPost
+        fetch(URL, postparam);
     }
-
-
 });
