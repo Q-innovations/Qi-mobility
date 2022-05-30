@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>GAS Form</title>
+    <style>
+      body{ width: 100vw; height: 100vh; display: flex; flex-direction: row; }
+      #left{ background-color: #ffeeee; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: start; }
+      #right{ background-color: #eeeeff; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: start; }
+    </style>
+    <script>
+      function OnPost(){
+
+        let URL = "https://script.google.com/macros/s/AKfycbx-uByBSgadRv1uDtdvuNzJlv1nXvmm8KKAPokxPSZB7y4xwq_bh5B0eItobHfBAQLx/exec";
+
+        let SendDATA = {
+
+          "column_1" : document.getElementById("column_1").value,
+          "column_2" : document.getElementById("column_2").value,
+          "column_3" : document.getElementById("column_3").value,
+          "column_4" : document.getElementById("column_4").value
+
+/*
+                "action":"a",
+                "column_01": document.getElementById("eplace").value,
+                "column_02": document.getElementById("riyokana").value,
+                "column_03": document.getElementById("starttime").value,
+                "column_04": document.getElementById("menu").value
+                "column_05": document.getElementById("eplace").value,
+                "column_06": document.getElementById("riyokana").value,
+                "column_07": document.getElementById("starttime").value,
+                "column_08": document.getElementById("menu").value,
+                "column_09": document.getElementById("eplace").value,
+                "column_10": document.getElementById("riyokana").value
+                */
+        };
+        let postparam = {
+          "method" : "POST",
+          "mode" : "no-cors",
+          "Content-Type" : "application/x-www-form-urlencoded",
+          "body" : JSON.stringify(SendDATA)
+        };
+window.alert('Error sending message: ' + URL);
+        fetch(URL, postparam);
+      }
+      function OnGet(){
+
+        const URL = "https://script.google.com/macros/s/AKfycbx-uByBSgadRv1uDtdvuNzJlv1nXvmm8KKAPokxPSZB7y4xwq_bh5B0eItobHfBAQLx/exec";
+
+        fetch(URL)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          render_text = data.message;
+          document.getElementById("get_value").innerHTML = render_text;
+        })
+        .catch(error => {
+          document.getElementById("get_value").innerHTML = error;
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="left">
+      <h1>POST Form</h1>
+      <p>1列目</p>
+      <input type="text" id="column_1">
+      <p>2列目</p>
+      <input type="text" id="column_2">
+      <p>3列目</p>
+      <input type="text" id="column_3">
+      <p>4列目</p>
+      <input type="text" id="column_4">
+      <button style="margin-top: 20px;" onclick="OnPost();">送信</button>
+    </div>
+    <div id="right">
+      <h1>GET Form</h1>
+      <button style="margin-top: 20px;" onclick="OnGet();">取得</button>
+      <p>スプレッドシートの最終行は</p>
+      <p id="get_value"></p>
+      <p>です。</p>
+      <div class="form-group">
+        <label for="eplace">会場</label>
+        <select class="form-select form-select-lg mb-3" aria-label="会場" id="eplace">
+            <option value="2022/06/26(日)RS東櫛原">2022/06/26(日)RS東櫛原</option>
+            <option value="2022/10/XX(土)＋ｙｏｕ">2022/10/XX(土)＋ｙｏｕ</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="riyokana">利用者かな</label>
+        <select class="form-select form-select-lg mb-3" aria-label="利用者かな" id="riyokana">
+            <option value="もび　たろう">もび　たろう</option>
+            <option value="もび　はなこ">もび　はなこ</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="starttime">開始時刻</label>
+        <select class="form-select form-select-lg mb-3" aria-label="開始時刻" id="starttime">
+            <option value="13：00">13：00</option>
+            <option value="13：30">13：30</option>
+            <option value="14：00">14：00</option>
+            <option value="14：30">14：30</option>
+            <option value="15：00">15：00</option>
+            <option value="15：30">15：30</option>
+            <option value="16：00">16：00</option>
+            <option value="16：30">16：30</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="menu">機種</label>
+        <select class="form-select form-select-lg mb-3" aria-label="機種" id="menu">
+            <option value="Segway(ハンド)">Segway(ハンド)</option>
+            <option value="Segway(フット)">Segway(フット)</option>
+            <option value="Kintone(オフロード)">Kintone(オフロード)</option>
+        </select>
+    </div>    </div>
+  </body>
+</html>
