@@ -90,7 +90,7 @@ $('form').submit(function () {
             liff.sendMessages([
                 {
                     type: 'text',
-                    text: JSON.stringify('会員情報登録しました！会員ID： ' + document.getElementById('useridprofilefield').value),
+                    text: JSON.parse('会員情報登録しました！会員ID： ' + document.getElementById('useridprofilefield').value),
                 },
             ])
                 .then(() => {
