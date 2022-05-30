@@ -79,7 +79,7 @@ $('form').submit(function () {
         // validate結果OK
         // LINE起動チェック
         //if (liff.isInClient()) {
-        if (liff.isInClient()) {
+        if (!liff.isInClient()) {
             window.alert('LINEから起動してください');
         } else {
             // UserInfoスプレッドシート登録
