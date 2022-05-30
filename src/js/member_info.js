@@ -5,7 +5,7 @@ window.addEventListener('load', function () {
     jQuery("#inputform").validationEngine('attach', {
         ajaxFormValidation: true
         , onBeforeAjaxFormValidation: beforeCall
-        , promptPosition: "bottomLeft"
+        , promptPosition: "topRight"
     });
     function beforeCall() {
         //すべてOK!!
@@ -37,7 +37,7 @@ window.addEventListener('load', function () {
                 var getLanguage = liff.getLanguage();
                 var isInClient = liff.isInClient();
                 var isLoggedIn = liff.isLoggedIn();
-                window.alert(nowDate + " " + userId + " " + displayName + " " + getLanguage + " " + isInClient + " " + isLoggedIn);
+                //window.alert(nowDate + " " + userId + " " + displayName + " " + getLanguage + " " + isInClient + " " + isLoggedIn);
             }).catch(function (error) {
                 alert("LINEから起動してください");
             });
@@ -73,29 +73,36 @@ agreeCheckbox.addEventListener("click", () => {
 
 // 登録ボタン処理
 $('form').submit(function () {
-    // sendMessages call
-    //if (liff.isInClient()) {
-    if (!liff.isInClient()) {
-        window.alert('LINEから起動してください');
+    // validate結果を取得
+    var validateResult = $("#inputform").validationEngine('validate');
+    if (validateResult) {
+        // validate結果OK
+        // LINE起動チェック
+        //if (liff.isInClient()) {
+        if (!liff.isInClient()) {
+            window.alert('LINEから起動してください');
+        } else {
+            // UserInfoスプレッドシート登録
+            insertUserInfo();
+            // UserInfoスプレッドシート更新
+            // updateUserInfo();
+            // LINEメッセージ送信
+            liff.sendMessages([
+                {
+                    type: 'text',
+                    text: JSON.stringify('会員情報登録しました！会員ID： ' + document.getElementById('useridprofilefield').value),
+                },
+            ])
+                .then(() => {
+                    // window.alert('Message sent');
+                    liff.closeWindow();
+                })
+                .catch((error) => {
+                    window.alert('LINEsendMessages失敗: ' + error);
+                });
+        }
     } else {
-        // UserInfoスプレッドシート登録
-        insertUserInfo();
-        // UserInfoスプレッドシート更新
-        // updateUserInfo();
-        // LINEメッセージ送信
-        liff.sendMessages([
-            {
-                type: 'text',
-                text: JSON.stringify('会員情報登録しました！会員ID： ' + document.getElementById('useridprofilefield').value),
-            },
-        ])
-            .then(() => {
-                // window.alert('Message sent');
-                liff.closeWindow();
-            })
-            .catch((error) => {
-                window.alert('LINEsendMessages失敗: ' + error);
-            });
+        window.alert('入力エラーがあります。');
     }
     return false;
 
