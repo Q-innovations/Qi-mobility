@@ -1,0 +1,242 @@
+function doPost(e) {
+
+  var postParam = JSON.parse(e.postData.getDataAsString());
+  switch (postParam.action) {//actionパラメーターの内容によって処理を分岐
+
+    //会員情報取得API
+    case "SelUserinfo":
+      {
+        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SHEET_NAME = 'QUERY';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        var keyword = JsonDATA.useridprofilefield;
+        var values = Sheet.getRange(1, 1).setValue('=QUERY(userinfo!A:V,"WHERE A = \'' + keyword + '\'")');
+        var values = Sheet.getDataRange().getValues();
+        const data = [];
+
+        //シートの入力内容をオブジェクトに詰め替え
+        for (let i = 0; i < values.length; i++) {
+          //ヘッダー部(1行目)はスキップ
+          if (i === 0) continue;
+          const param = {};
+          for (let j = 0; j < values[i].length; j++) {
+            param[values[0][j]] = values[i][j];
+          }
+          data.push(param);
+        }
+        return obj2txtout(data);
+/*
+        //返却情報を生成
+        const result = ContentService.createTextOutput();
+
+        //Mime TypeをJSONに設定
+        result.setMimeType(ContentService.MimeType.JSON);
+
+        //JSONテキストをセットする
+        result.setContent(JSON.stringify(data));
+
+        return result;
+*/
+      }
+      break;
+
+    //会員情報登録API
+    case "InsUserinfo":
+      {
+        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SHEET_NAME = 'userinfo';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        //var Sheet = SpreadsheetApp.getActiveSheet();
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        var date = new Date();
+        var now = Utilities.formatDate(date, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss')
+
+        Sheet.appendRow([
+          JsonDATA.useridprofilefield,
+          JsonDATA.displaynamefield,
+          JsonDATA.name,
+          JsonDATA.namekana,
+          "'" + JsonDATA.tel,
+          "'" + JsonDATA.zip,
+          JsonDATA.adress1,
+          JsonDATA.adress2,
+          JsonDATA.riyo1,
+          JsonDATA.bd1,
+          JsonDATA.riyo2,
+          JsonDATA.bd2,
+          JsonDATA.riyo3,
+          JsonDATA.bd3,
+          JsonDATA.riyo4,
+          JsonDATA.bd4,
+          JsonDATA.riyo5,
+          JsonDATA.bd5,
+          JsonDATA.riyo6,
+          JsonDATA.bd6,
+          0,
+          now
+        ]);
+        return obj2txtout({ message: "success!", });
+      }
+      break;
+
+    //イベント取得API
+    case "SelEvent":
+      {
+        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SHEET_NAME = 'event';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        var keyword = JsonDATA.useridprofilefield;
+        var values = Sheet.getDataRange().getValues();
+        const data = [];
+
+        //シートの入力内容をオブジェクトに詰め替え
+        for (let i = 0; i < values.length; i++) {
+          //ヘッダー部(1行目)はスキップ
+          if (i === 0) continue;
+          const param = {};
+          for (let j = 0; j < values[i].length; j++) {
+            param[values[0][j]] = values[i][j];
+          }
+          data.push(param);
+        }
+        return obj2txtout(data);
+/*
+        //返却情報を生成
+        const result = ContentService.createTextOutput();
+
+        //Mime TypeをJSONに設定
+        result.setMimeType(ContentService.MimeType.JSON);
+
+        //JSONテキストをセットする
+        result.setContent(JSON.stringify(data));
+
+        return result;
+*/
+      }
+      break;
+
+    //予約状況取得API
+    case "SelReserve":
+      {
+        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SHEET_NAME = 'QUERY';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        var keyword = JsonDATA.useridprofilefield;
+        var values = Sheet.getRange(1, 1).setValue('=QUERY(userinfo!A:V,"WHERE A = \'' + keyword + '\'")');
+        var values = Sheet.getDataRange().getValues();
+        const data = [];
+
+        //シートの入力内容をオブジェクトに詰め替え
+        for (let i = 0; i < values.length; i++) {
+          //ヘッダー部(1行目)はスキップ
+          if (i === 0) continue;
+          const param = {};
+          for (let j = 0; j < values[i].length; j++) {
+            param[values[0][j]] = values[i][j];
+          }
+          data.push(param);
+        }
+        return obj2txtout(data);
+/*
+        //返却情報を生成
+        const result = ContentService.createTextOutput();
+
+        //Mime TypeをJSONに設定
+        result.setMimeType(ContentService.MimeType.JSON);
+
+        //JSONテキストをセットする
+        result.setContent(JSON.stringify(data));
+
+        return result;
+*/
+      }
+      break;
+
+    //予約登録API
+    case "InsReserve":
+      {
+        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SHEET_NAME = 'reserve';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        //var Sheet = SpreadsheetApp.getActiveSheet();
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        var date = new Date();
+        var now = Utilities.formatDate(date, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss')
+
+        Sheet.appendRow([
+          JsonDATA.useridprofilefield,
+          JsonDATA.eplace,
+          JsonDATA.starttime,
+          JsonDATA.riyo,
+          "'" + JsonDATA.bd,
+          "'" + JsonDATA.menu,
+          0,
+          now
+        ]);
+        return obj2txtout({ message: "success!", });
+      }
+      break;
+
+
+    default:
+      {
+        const result = 'did nothing';
+        return ContentService.createTextOutput(JSON.stringify(result));
+      }
+      break;
+
+  }
+}
+
+function obj2txtout(obj) {
+  let output = ContentService.createTextOutput();
+  output.setMimeType(ContentService.MimeType.JSON);
+  output.setContent(JSON.stringify(obj));
+  return output;
+}
+
+function execDoPost() {
+  //eの作成
+  var e = {
+    postData: {
+      "action": "insertUserInfo",
+      "useridprofilefield": "userId"
+    }
+  };
+  doPost(e);
+}
+
+function doGet() {
+  let Sheet = SpreadsheetApp.getActiveSheet();
+  let Data = Sheet.getDataRange().getValues();
+  let DataIndex = Data.length - 1;
+  let ReturnTxt = "1列目：" + Data[DataIndex][0]
+    + "　2列目：" + Data[DataIndex][1]
+    + "　3列目：" + Data[DataIndex][2]
+    + "　4列目：" + Data[DataIndex][3]
+    + "　5列目：" + Data[DataIndex][4]
+    + "　6列目：" + Data[DataIndex][5]
+    + "　7列目：" + Data[DataIndex][6]
+    + "　8列目：" + Data[DataIndex][7]
+    + "　9列目：" + Data[DataIndex][8]
+    + "　10列目：" + Data[DataIndex][9]
+    + "　11列目：" + Data[DataIndex][10]
+    + "　12列目：" + Data[DataIndex][11]
+    + "　13列目：" + Data[DataIndex][12]
+    + "　14列目：" + Data[DataIndex][13]
+    + "　15列目：" + Data[DataIndex][14]
+    + "　16列目：" + Data[DataIndex][15]
+    + "　17列目：" + Data[DataIndex][16]
+    + "　18列目：" + Data[DataIndex][17]
+    + "　19列目：" + Data[DataIndex][18]
+    + "　20列目：" + Data[DataIndex][19];
+  return obj2txtout({ message: ReturnTxt, });
+}
