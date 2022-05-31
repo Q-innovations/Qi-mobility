@@ -14,17 +14,21 @@ window.addEventListener("load", function () {
   // LINE DevelopersのliffId★各自変更
   var liffId = "1657149830-k11N9eMA";
   getLineProfile(liffId);
+
+  // LINE起動チェック
+  //if (liff.isInClient()) {
+  if (!liff.isInClient()) {
+    window.alert("LINEから起動してください");
+  } else {
   // GasUserinfo取得
   getGasUserinfo();
   // GasUserinfoがあれば続行、なければ利用者登録アラート
   // GasEventinfo会場取得
-  getGasUserinfo();
-
-  // getGasEventinfo();
+  getGasEventinfo();
   // GasEventmenu機器取得
   // getGasEventmenu();
   // GasEventReserveView予約残数取得
-  // getGasEventReserveView();
+  getGasEventReserveView();
   // GasEventReserveViewセット
   // dispGasEventReserveView();
   // GasEventinfo会場セット
@@ -35,14 +39,103 @@ window.addEventListener("load", function () {
   // dispGasEventmenu();
 });
 
-// 代表者かな処理
-function onbNamekana() {
-  // 利用者かな１と誕生日１をセット
-  document.getElementById("riyo1").value =
-    document.getElementById("namekana").value;
-  var now = new Date();
-  document.getElementById("bd1").value = "2000-01-01";
+// ユーザー情報取得
+function getGasUserinfo(userId) {
+    // GASでデプロイしたWebアプリケーションのURL
+    // https://ryjkmr.com/gas-web-application-usual-way/
+    let URL =
+      "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+
+    let SendDATA = {
+      action: "GetUserinfo",
+      useridprofilefield: document.getElementById("useridprofilefield").value,
+      displaynamefield: document.getElementById("displaynamefield").value
+    };
+    let postparam = {
+      method: "POST",
+      mode: "no-cors",
+      "Content-Type": "application/x-www-form-urlencoded",
+      body: JSON.stringify(SendDATA),
+    };
+    // GAS doPost
+    fetch(URL, postparam)
+        .then(response => response.json())
+        /*成功した処理*/
+        .then(data => {
+            //JSONから配列に変換
+            const object = data;
+            //inputタグそれぞれに取得したデータを設定
+            $('input').each(function (index, element) {
+                if (object[0][$(element).attr('name')]) {
+                    $(element).val([object[0][$(element).attr('name')]]);
+                }
+            });
+        });
+
+
+/*
+//ここは各自変更してください。
+const SPREAD_SHEET_ID = 'スプレッドシートのID';
+const SHEET_NAME = 'シート名';
+
+//GETリクエスト時に呼び出される関数
+function doGet(e) {
+  //スプレッドシートをIDで取得
+  const app = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+  //シートをシート名で取得
+  const sheet = app.getSheetByName(SHEET_NAME);
+  //シートの入力内容を全て配列で取得
+  const values = sheet.getDataRange().getValues();
+  const data = [];
+
+  //シートの入力内容をオブジェクトに詰め替え
+  for(let i=0; i<values.length; i++){
+    //ヘッダー部(1行目)はスキップ
+    if(i === 0)continue;
+    const param = {};
+    for(let j=0; j<values[i].length; j++){
+      param[values[0][j]] = values[i][j];
+    }
+    data.push(param);
+  }
+  //返却情報を生成
+  const result = ContentService.createTextOutput();
+
+    //Mime TypeをJSONに設定
+    result.setMimeType(ContentService.MimeType.JSON);
+
+    //JSONテキストをセットする
+    result.setContent(JSON.stringify(data));
+
+    return result;
 }
+
+
+
+var page=e.parameter["p"];
+if(page == "index" || page==null){
+var app = HtmlService.createTemplateFromFile("Index.html");
+return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
+}
+else if(page =="menu1"){
+var app = HtmlService.createTemplateFromFile("Menu1.html");
+return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
+}
+else if(page =="menu2"){
+var app = HtmlService.createTemplateFromFile("Menu2.html");
+return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
+}
+else{
+var app = HtmlService.createTemplateFromFile("Error.html");
+return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
+}
+
+*/
+
+
+
+
+    }
 
 // 同意チェックボックス処理
 // 「同意する」のチェックボックスを取得
