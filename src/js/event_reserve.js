@@ -47,9 +47,9 @@ function getGasUserinfo(userId) {
       "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
     let SendDATA = {
-      action: "GetUserinfo",
+      action: "SelUserinfo",
       useridprofilefield: document.getElementById("useridprofilefield").value,
-      displaynamefield: document.getElementById("displaynamefield").value
+      displaynamefield: document.getElementById("tel").value
     };
     let postparam = {
       method: "POST",
@@ -71,7 +71,7 @@ function getGasUserinfo(userId) {
                 }
             });
         });
-
+}
 
 /*
 //ここは各自変更してください。
@@ -132,10 +132,6 @@ return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
 
 */
 
-
-
-
-    }
 
 // 同意チェックボックス処理
 // 「同意する」のチェックボックスを取得

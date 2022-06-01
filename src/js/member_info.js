@@ -11,44 +11,49 @@ window.addEventListener("load", function () {
     //alert('OK!!');
   }
   // LINEプロフィール取得
-  getLineProfile();
+  // LINE DevelopersのliffId★各自変更
+  var liffId = "1657149830-O4YdRWr2";
+  getLineProfile(liffId);
+  // ユーザー情報取得
+  getGasUserinfo();
 
-  // LINEプロフィール取得
-  function getLineProfile() {
-    // LINE DevelopersのliffId★各自変更
-    var liffId = "1657149830-O4YdRWr2";
-    // liff処理
-    liff
-      .init({
-        liffId: liffId,
-      })
-      .then(() => {
-        // LINEプロフィール取得表示
-        //初期化
-        // https://developers.line.me/ja/reference/liff/#liffgetprofile()
-        liff
-          .getProfile()
-          .then(function (profile) {
-            // profile情報セット
-            document.getElementById("useridprofilefield").value =
-              profile.userId;
-            document.getElementById("displaynamefield").value =
-              profile.displayName;
-            // アラート出力
-            var nowDate = new Date();
-            var userId = profile.userId;
-            var displayName = profile.displayName;
-            var getLanguage = liff.getLanguage();
-            var isInClient = liff.isInClient();
-            var isLoggedIn = liff.isLoggedIn();
-            //window.alert(nowDate + " " + userId + " " + displayName + " " + getLanguage + " " + isInClient + " " + isLoggedIn);
-          })
-          .catch(function (error) {
-            alert("LINEから起動してください");
+
+});
+
+// ユーザー情報取得
+function getGasUserinfo(userId) {
+  // GASでデプロイしたWebアプリケーションのURL
+  // https://ryjkmr.com/gas-web-application-usual-way/
+  let URL =
+    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+
+  let SendDATA = {
+    action: "SelUserinfo",
+    useridprofilefield: document.getElementById("useridprofilefield").value,
+    displaynamefield: document.getElementById("tel").value
+  };
+  let postparam = {
+    method: "POST",
+    mode: "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam)
+      .then(response => response.json())
+      /*成功した処理*/
+      .then(data => {
+          //JSONから配列に変換
+          const object = data;
+          //inputタグそれぞれに取得したデータを設定
+          $('input').each(function (index, element) {
+              if (object[0][$(element).attr('name')]) {
+                  $(element).val([object[0][$(element).attr('name')]]);
+              }
           });
       });
-  }
-});
+}
+
 
 // 代表者かな処理
 function onbNamekana() {
