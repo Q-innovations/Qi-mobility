@@ -66,12 +66,11 @@ function onNamekana() {
 
 // 同意チェックボックス処理
 function onAgree() {
-  checkbox = document.getElementsByName('checkAgree')
-  if (checkAgree.checked) {
-    document.getElementById('submit-btn').disabled = "";
+  if (document.getElementById('checkAgree').checked) {
+    document.getElementById('submit-btn').disabled = false;
   }
   else {
-    document.getElementById('submit-btn').disabled = "disabled";
+    document.getElementById('submit-btn').disabled = true;
   }
 }
 

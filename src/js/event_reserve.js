@@ -8,7 +8,7 @@ window.addEventListener("load", function () {
   });
   function beforeCall() {
     //すべてOK!!
-    //alert('OK!!');
+    alert('チェックOK!!');
   }
   // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
