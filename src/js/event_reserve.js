@@ -17,7 +17,7 @@ window.addEventListener("load", function () {
 
   // LINE起動チェック
   //if (liff.isInClient()) {
-  if (liff.isInClient()) {
+  if (!liff.isInClient()) {
     window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
