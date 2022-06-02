@@ -20,135 +20,147 @@ window.addEventListener("load", function () {
   if (!liff.isInClient()) {
     window.alert("LINEから起動してください");
   } else {
-  // GasUserinfo取得
-  getGasUserinfo();
-  // GasUserinfoがあれば続行、なければ利用者登録アラート
-  // GasEventinfo会場取得
-  getGasEventinfo();
-  // GasEventmenu機器取得
-  // getGasEventmenu();
-  // GasEventReserveView予約残数取得
-  getGasEventReserveView();
-  // GasEventReserveViewセット
-  // dispGasEventReserveView();
-  // GasEventinfo会場セット
-  // dispGasEventinfo();
-  // GasUserinfo利用者セット
-  // dispGasUserinfo();
-  // GasEventmenu機器セット
-  // dispGasEventmenu();
+    // ユーザー情報取得
+    getGasUserinfo();
+    // 利用者が設定されていれば続行、なければ利用者登録アラートしてclose
+    // window.alert('利用者登録後に予約お願いします。');
+    // liff.closeWindow(); or return false;
+    // イベント情報取得
+    getGasEventinfo();
+    // 予約残数取得
+    getGasEventReserveView();
+    // 機器取得
+    // getGasEventmenu();
+  }
 });
 
 // ユーザー情報取得
-function getGasUserinfo(userId) {
-    // GASでデプロイしたWebアプリケーションのURL
-    // https://ryjkmr.com/gas-web-application-usual-way/
-    let URL =
-      "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+function getGasUserinfo() {
+  // GASでデプロイしたWebアプリケーションのURL
+  // https://ryjkmr.com/gas-web-application-usual-way/
+  let URL =
+    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
-    let SendDATA = {
-      action: "SelUserinfo",
-      useridprofilefield: document.getElementById("useridprofilefield").value,
-      displaynamefield: document.getElementById("tel").value
-    };
-    let postparam = {
-      method: "POST",
-      mode: "no-cors",
-      "Content-Type": "application/x-www-form-urlencoded",
-      body: JSON.stringify(SendDATA),
-    };
-    // GAS doPost
-    fetch(URL, postparam)
-        .then(response => response.json())
-        /*成功した処理*/
-        .then(data => {
-            //JSONから配列に変換
-            const object = data;
-            //inputタグそれぞれに取得したデータを設定
-            $('input').each(function (index, element) {
-                if (object[0][$(element).attr('name')]) {
-                    $(element).val([object[0][$(element).attr('name')]]);
-                }
-            });
-        });
+  let SendDATA = {
+    action: "SelUserinfo",
+    useridprofilefield: document.getElementById("useridprofilefield").value,
+    tel: document.getElementById("tel").value,
+  };
+  let postparam = {
+    method: "POST",
+    mode: "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam)
+    .then((response) => response.json())
+    /*成功した処理*/
+    .then((data) => {
+      //JSONから配列に変換
+      const object = data;
+      //inputタグそれぞれに取得したデータを設定
+      $("input").each(function (index, element) {
+        if (object[0][$(element).attr("name")]) {
+          $(element).val([object[0][$(element).attr("name")]]);
+        }
+      });
+      /*
+      //利用者selectタグ（子） の option値 を一旦削除
+      $(".riyokana option").remove();
+      //optionタグ を追加する
+      $.each(data, function (id, name) {
+        $(".riyokana").append($("<option>").text(name).attr("value", id));
+      });
+      */
+    });
 }
 
-/*
-//ここは各自変更してください。
-const SPREAD_SHEET_ID = 'スプレッドシートのID';
-const SHEET_NAME = 'シート名';
+// イベント情報取得
+function getGasEventinfo() {
+  // GASでデプロイしたWebアプリケーションのURL
+  // https://ryjkmr.com/gas-web-application-usual-way/
+  let URL =
+    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
-//GETリクエスト時に呼び出される関数
-function doGet(e) {
-  //スプレッドシートをIDで取得
-  const app = SpreadsheetApp.openById(SPREAD_SHEET_ID);
-  //シートをシート名で取得
-  const sheet = app.getSheetByName(SHEET_NAME);
-  //シートの入力内容を全て配列で取得
-  const values = sheet.getDataRange().getValues();
-  const data = [];
-
-  //シートの入力内容をオブジェクトに詰め替え
-  for(let i=0; i<values.length; i++){
-    //ヘッダー部(1行目)はスキップ
-    if(i === 0)continue;
-    const param = {};
-    for(let j=0; j<values[i].length; j++){
-      param[values[0][j]] = values[i][j];
-    }
-    data.push(param);
-  }
-  //返却情報を生成
-  const result = ContentService.createTextOutput();
-
-    //Mime TypeをJSONに設定
-    result.setMimeType(ContentService.MimeType.JSON);
-
-    //JSONテキストをセットする
-    result.setContent(JSON.stringify(data));
-
-    return result;
+  let SendDATA = {
+    action: "SelEvent",
+    erea: document.getElementById("erea").value,
+  };
+  let postparam = {
+    method: "POST",
+    mode: "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam)
+    .then((response) => response.json())
+    /*成功した処理*/
+    .then((data) => {
+      //JSONから配列に変換
+      const object = data;
+      /*
+      //会場selectタグ（子） の option値 を一旦削除
+      $(".eplace1 option").remove();
+      $(".eplace2 option").remove();
+      //optionタグ を追加する
+      $.each(data, function (id, name) {
+        $(".eplace1").append($("<option>").text(name).attr("value", id));
+        $(".eplace2").append($("<option>").text(name).attr("value", id));
+      });
+      */
+    });
 }
 
+// 予約残数取得
+function getGasEventReserveView() {
+  // GASでデプロイしたWebアプリケーションのURL
+  // https://ryjkmr.com/gas-web-application-usual-way/
+  let URL =
+    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
+  let SendDATA = {
+    action: "SelEventReserve",
+    erea: document.getElementById("erea").value,
+    erea: document.getElementById("eplace1").value,
+  };
+  let postparam = {
+    method: "POST",
+    mode: "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam)
+    .then((response) => response.json())
+    /*成功した処理*/
+    .then((data) => {
+      //JSONから配列に変換
+      const object = data;
+      //残数値 を変換　残りわずかなど
 
-var page=e.parameter["p"];
-if(page == "index" || page==null){
-var app = HtmlService.createTemplateFromFile("Index.html");
-return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
+      //残数値 を更新
+      //document.getElementById("1300").textContent = object.XXX
+      //document.getElementById("1330").textContent = object.XXX
+      //document.getElementById("1400").textContent = object.XXX
+      //document.getElementById("1430").textContent = object.XXX
+      //document.getElementById("1500").textContent = object.XXX
+      //document.getElementById("1530").textContent = object.XXX
+      //document.getElementById("1600").textContent = object.XXX
+      //document.getElementById("1630").textContent = object.XXX
+    });
 }
-else if(page =="menu1"){
-var app = HtmlService.createTemplateFromFile("Menu1.html");
-return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
-}
-else if(page =="menu2"){
-var app = HtmlService.createTemplateFromFile("Menu2.html");
-return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
-}
-else{
-var app = HtmlService.createTemplateFromFile("Error.html");
-return app.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME);
-}
 
-*/
+// イベント会場1処理
+function onbEplace1() {
+  // 予約残数取得
+  getGasEventReserveView();
 
-
-// 同意チェックボックス処理
-// 「同意する」のチェックボックスを取得
-const agreeCheckbox = document.getElementById("agree");
-// 送信ボタンを取得
-const submitBtn = document.getElementById("submit-btn");
-// チェックボックスをクリック
-agreeCheckbox.addEventListener("click", () => {
-  // チェックされている場合
-  if (agreeCheckbox.checked === true) {
-    submitBtn.disabled = false; // disabledを外す
-  }
-  // チェックされていない場合
-  else {
-    submitBtn.disabled = true; // disabledを付与
-  }
-});
+  // 会場2をセット
+  document.getElementById("eplace2").value =
+    document.getElementById("eplace1").value;
+}
 
 // 登録ボタン処理
 $("form").submit(function () {
@@ -164,24 +176,18 @@ $("form").submit(function () {
     if (!liff.isInClient()) {
       window.alert("LINEから起動してください");
     } else {
-      // UserInfoスプレッドシート登録
-      insertUserInfo();
-      // UserInfoスプレッドシート更新
-      // updateUserInfo();
-      // EventReserveにデータがあれば注意を促す
-      // GAS＋googleスプレッドシート登録
-      //        insertEventReserve();
+      // イベント予約登録
+      insertEventReserve();
       // PAYPAYAPI連携
       // PAYPAYIDと詳細と金額を送信して支払い
-      //        paymentPaypay();
+      // paymentPaypay();
       // LINEメッセージ送信
       liff
         .sendMessages([
           {
             type: "text",
             text: JSON.stringify(
-              "イベント予約しました！会員ID： " +
-                document.getElementById("useridprofilefield").value
+              "イベント予約完了しました！PAYPAYからQRコードを読み取り、500円お支払いください。支払い確認のため支払った後のスクリーンショットを張り付けてください。"
             ),
           },
         ])
@@ -196,35 +202,20 @@ $("form").submit(function () {
   }
   return false;
 
-  // insertUserInfo
-  function insertUserInfo() {
+  // イベント予約登録
+  function insertEventReserve() {
     // GASでデプロイしたWebアプリケーションのURL
     // https://ryjkmr.com/gas-web-application-usual-way/
     let URL =
       "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
     let SendDATA = {
-      action: "InsUserinfo",
+      action: "InsEventReserve",
       useridprofilefield: document.getElementById("useridprofilefield").value,
-      displaynamefield: document.getElementById("displaynamefield").value,
-      name: document.getElementById("name").value,
-      namekana: document.getElementById("namekana").value,
-      tel: document.getElementById("tel").value,
-      zip: document.getElementById("zip").value,
-      adress1: document.getElementById("adress1").value,
-      adress2: document.getElementById("adress2").value,
-      riyo1: document.getElementById("riyo1").value,
-      bd1: document.getElementById("bd1").value,
-      riyo2: document.getElementById("riyo2").value,
-      bd2: document.getElementById("bd2").value,
-      riyo3: document.getElementById("riyo3").value,
-      bd3: document.getElementById("bd3").value,
-      riyo4: document.getElementById("riyo4").value,
-      bd4: document.getElementById("bd4").value,
-      riyo5: document.getElementById("riyo5").value,
-      bd5: document.getElementById("bd5").value,
-      riyo6: document.getElementById("riyo6").value,
-      bd6: document.getElementById("bd6").value,
+      bd4: document.getElementById("eplace2").value,
+      riyo5: document.getElementById("riyokana").value,
+      bd5: document.getElementById("starttime").value,
+      riyo6: document.getElementById("menu").value,
     };
     let postparam = {
       method: "POST",
