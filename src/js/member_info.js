@@ -100,6 +100,7 @@ $("form").submit(function () {
       // UserInfoスプレッドシート更新
       // updateUserInfo();
       // LINEメッセージ送信
+//      var Messages = "会員情報登録しました！会員ID： " + document.getElementById("useridprofilefield").value
       liff
         .sendMessages([
           {
@@ -149,7 +150,7 @@ $("form").submit(function () {
       riyo5: document.getElementById("riyo5").value,
       bd5: document.getElementById("bd5").value,
       riyo6: document.getElementById("riyo6").value,
-      bd6: document.getElementById("bd6").value,
+      bd6: document.getElementById("bd6").value
     };
     let postparam = {
       method: "POST",

@@ -62,13 +62,19 @@
 
   <body>
     <div class="container">
-      <form action="#" method="POST" id="inputform">
+      <form action="#" method="POST" id="inputform" name="inputform">
         <div class="form-group">
           <label for="title">≪予約情報照会≫</label>
         </div>
         <div class="form-group">
-          <label for="place">会場</label>
-          <select class="form-select form-select-lg mb-3" aria-label="会場">
+          <label for="eplace1">会場</label>
+          <select
+            class="form-select form-select-lg mb-3"
+            aria-label="会場"
+            name="eplace1"
+            id="eplace1"
+            onblur="onbEplace1();"
+          >
             <option value="1">2022年06月26日(日)リバーサイド東櫛原</option>
             <option value="2">2022年10月XX日(土)＋ｙｏｕ</option>
           </select>
@@ -85,42 +91,42 @@
             <tr>
               <th scope="row">1</th>
               <td><label for="title">13：00</label></td>
-              <td><label for="title">残りわずか</label></td>
+              <td><label for="title" id="1300">残りわずか</label></td>
             </tr>
             <tr>
               <th scope="row">2</th>
               <td><label for="title">13：30</label></td>
-              <td><label for="title">予約可</label></td>
+              <td><label for="title" id="1330">予約可</label></td>
             </tr>
             <tr>
               <th scope="row">3</th>
               <td><label for="title">14：00</label></td>
-              <td><label for="title">予約不可</label></td>
+              <td><label for="title" id="1400">予約不可</label></td>
             </tr>
             <tr>
               <th scope="row">4</th>
               <td><label for="title">14：30</label></td>
-              <td><label for="title">残りわずか</label></td>
+              <td><label for="title" id="1430">残りわずか</label></td>
             </tr>
             <tr>
               <th scope="row">5</th>
               <td><label for="title">15：00</label></td>
-              <td><label for="title">予約可</label></td>
+              <td><label for="title" id="1500">予約可</label></td>
             </tr>
             <tr>
               <th scope="row">6</th>
               <td><label for="title">15：30</label></td>
-              <td><label for="title">予約不可</label></td>
+              <td><label for="title" id="1530">予約不可</label></td>
             </tr>
             <tr>
               <th scope="row">7</th>
               <td><label for="title">16：00</label></td>
-              <td><label for="title">予約可</label></td>
+              <td><label for="title" id="1600">予約可</label></td>
             </tr>
             <tr>
               <th scope="row">8</th>
               <td><label for="title">16：30</label></td>
-              <td><label for="title">残りわずか</label></td>
+              <td><label for="title" id="1630">残りわずか</label></td>
             </tr>
           </tbody>
         </table>
@@ -129,22 +135,21 @@
         </div>
         <input
           type="hidden"
-          id="useridprofilefield"
-          name="useridprofilefield"
-          value="userId"
-        />
-        <input
-          type="hidden"
           id="displaynamefield"
           name="displaynamefield"
           value="displaynamefield"
         />
+        <input type="hidden" id="tel" name="tel" value="tel" />
+        <!-- エリアはとりあえず福岡固定 -->
+        <input type="hidden" id="erea" name="erea" value="福岡" />
         <div class="form-group">
-          <label for="eplace">会場</label>
+          <label for="eplace2">会場</label>
           <select
             class="form-select form-select-lg mb-3"
             aria-label="会場"
-            id="eplace"
+            name="eplace2"
+            id="eplace2"
+            disabled
           >
             <option value="1">2022年06月26日(日)リバーサイド東櫛原</option>
             <option value="2">2022年10月XX日(土)＋ｙｏｕ</option>
@@ -155,7 +160,7 @@
           <select
             class="form-select form-select-lg mb-3"
             aria-label="利用者かな"
-            id="riyokana"
+            name="riyokana"
           >
             <option value="1">もび　たろう</option>
             <option value="2">もび　はなこ</option>
@@ -166,6 +171,7 @@
           <select
             class="form-select form-select-lg mb-3"
             aria-label="開始時刻"
+            name="starttime"
             id="starttime"
           >
             <option value="1300">13：00</option>
@@ -183,6 +189,7 @@
           <select
             class="form-select form-select-lg mb-3"
             aria-label="機種"
+            name="menu"
             id="menu"
           >
             <option value="Segway(ハンド)">Segway(ハンド)</option>

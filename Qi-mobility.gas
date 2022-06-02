@@ -93,8 +93,8 @@ function doPost(e) {
         var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
         var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
         var JsonDATA = JSON.parse(e.postData.getDataAsString());
-        var keyword = JsonDATA.useridprofilefield;
-        var values = Sheet.getDataRange().getValues();
+        var erea = JsonDATA.erea;
+        var values = Sheet.getRange(1, 1).setValue('=QUERY(event!A:B,"WHERE A = \'' + erea + '\'")');
         const data = [];
 
         //シートの入力内容をオブジェクトに詰め替え
@@ -124,7 +124,7 @@ function doPost(e) {
       break;
 
     //予約状況取得API
-    case "SelReserve":
+    case "SelEventReserve":
       {
         var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
         var SHEET_NAME = 'QUERY';
@@ -163,7 +163,7 @@ function doPost(e) {
       break;
 
     //予約登録API
-    case "InsReserve":
+    case "InsEventReserve":
       {
         var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
         var SHEET_NAME = 'reserve';
