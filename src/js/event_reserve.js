@@ -17,7 +17,7 @@ window.addEventListener("load", function () {
 
   // LINE起動チェック
   //if (liff.isInClient()) {
-  if (!liff.isInClient()) {
+  if (liff.isInClient()) {
     window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -26,9 +26,9 @@ window.addEventListener("load", function () {
     // window.alert('利用者登録後に予約お願いします。');
     // liff.closeWindow(); or return false;
     // イベント情報取得
-    getGasEventinfo();
+    //getGasEventinfo();
     // 予約残数取得
-    getGasEventReserveView();
+    //getGasEventReserveView();
     // 機器取得
     // getGasEventmenu();
   }
@@ -65,6 +65,7 @@ function getGasUserinfo() {
           $(element).val([object[0][$(element).attr("name")]]);
         }
       });
+      window.alert(data);
       /*
       //利用者selectタグ（子） の option値 を一旦削除
       $(".riyokana option").remove();
