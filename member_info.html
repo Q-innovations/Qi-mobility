@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
     <!-- jQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
@@ -20,39 +27,46 @@
       integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
       crossorigin="anonymous"
     ></script>
-    <!-- Bootstrap CSS -->
+    <!-- jQuery-Validation-Engine -->
+    <script
+      src="lib/jQuery-Validation-Engine_2.6.4/js/jquery-1.8.2.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="lib/jQuery-Validation-Engine_2.6.4/js/jquery.validationEngine.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script
+      src="lib/jQuery-Validation-Engine_2.6.4/js/jquery.validationEngine-ja.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-      crossorigin="anonymous"
+      href="lib/jQuery-Validation-Engine_2.6.4/css/validationEngine.jquery.css"
+      charset="utf-8"
+      type="text/css"
     />
-        <!-- jQuery-Validation-Engine  -->   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
-    <script src="js/jquery.validationEngine-ja.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="css/validationEngine.jquery.css" type="text/css"/>
-
     <!-- LINE liff -->
     <script
       charset="utf-8"
       src="https://static.line-scdn.net/liff/edge/2/sdk.js"
     ></script>
     <!-- ajaxzip3 -->
-    <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
-    <!-- <script
+    <script
       src="lib/ajaxzip3/js/ajaxzip3.js"
       type="text/javascript"
       charset="UTF-8"
     ></script>
- -->
+    <!-- src -->
+    <script src="src/js/common.js" charset="UTF-8"></script>
+    <script src="src/js/member_info.js" charset="UTF-8"></script>
+
     <title>会員情報登録</title>
   </head>
 
   <body>
-    <!-- src -->
-    <script src="src/js/common.js" charset="UTF-8"></script>
-    <script src="src/js/member_info.js" charset="UTF-8"></script>
     <div class="container">
       <form action="#" method="POST" id="inputform">
         <div class="form-group">
@@ -66,7 +80,7 @@
             name="name"
             maxlength="15"
             class="validate[required] size-input-name"
-            placeholder="(例)モビ  太郎"
+            placeholder="(例)モビ　太郎"
             title="15文字以内"
           />
         </div>
@@ -78,13 +92,13 @@
             name="namekana"
             maxlength="15"
             class="validate[required,custom[hiragana]] size-input-name"
-            placeholder="(例)もび  たろう"
+            placeholder="(例)もび　たろう"
             title="かな15文字以内"
-            onblur="onNamekana();"
+            onblur="onbNamekana();"
           />
         </div>
         <div class="form-group">
-          <label for="tel">携帯番号  </label>
+          <label for="tel">携帯番号　</label>
           <input
             type="text"
             id="tel"
@@ -100,7 +114,7 @@
             type="hidden"
             id="useridprofilefield"
             name="useridprofilefield"
-            value="useridprofilefield"
+            value="userId"
           />
           <input
             type="hidden"
@@ -108,13 +122,12 @@
             name="displaynamefield"
             value="displayName"
           />
-          <!-- <input type="hidden" id="useridprofilefield" name="useridprofilefield" value="U91f9611376221676612af6c1d690a8a5" /> -->
           <!-- <input type="hidden" id="browserLanguage" name="browserLanguage" value="browserLanguage" /> -->
           <!-- <input type="hidden" id="isInClient" name="isInClient" value="isInClient" /> -->
           <!-- <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="isLoggedIn" /> -->
         </div>
         <div class="form-group">
-          <label for="zip">郵便番号  </label>
+          <label for="zip">郵便番号　</label>
           <input
             type="text"
             id="zip"
@@ -169,7 +182,7 @@
                   name="riyo1"
                   maxlength="15"
                   class="validate[required,custom[hiragana]] size-input-name"
-                  placeholder="(例)もび  たろう"
+                  placeholder="(例)もび　たろう"
                   title="15文字以内"
                 />
               </td>
@@ -190,7 +203,7 @@
                   name="riyo2"
                   maxlength="15"
                   class="validate[custom[hiragana]] size-input-name"
-                  placeholder="(例)もび  はなこ"
+                  placeholder="(例)もび　はなこ"
                   title="15文字以内"
                 />
               </td>
@@ -205,7 +218,7 @@
                   name="riyo3"
                   maxlength="15"
                   class="validate[custom[hiragana]] size-input-name"
-                  placeholder="(例)もび  もびた"
+                  placeholder="(例)もび　もびた"
                   title="15文字以内"
                 />
               </td>
@@ -220,7 +233,7 @@
                   name="riyo4"
                   maxlength="15"
                   class="validate[custom[hiragana]] size-input-name"
-                  placeholder="(例)もび  しずか"
+                  placeholder="(例)もび　しずか"
                   title="15文字以内"
                 />
               </td>
@@ -235,7 +248,7 @@
                   name="riyo5"
                   maxlength="15"
                   class="validate[custom[hiragana]] size-input-name"
-                  placeholder="(例)もび  たけし"
+                  placeholder="(例)もび　たけし"
                   title="15文字以内"
                 />
               </td>
@@ -250,7 +263,7 @@
                   name="riyo6"
                   maxlength="15"
                   class="validate[custom[hiragana]] size-input-name"
-                  placeholder="(例)もび  すねお"
+                  placeholder="(例)もび　すねお"
                   title="15文字以内"
                 />
               </td>
@@ -342,31 +355,31 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="space">  </label>
+          <label for="space">　</label>
           <label for="space"
             >マナー違反があった場合や、スタッフの指示に従わない場合は退場を命じることがあります。また、そういった行為が続く場合はイベントを中止する場合もありますので、ご協力をお願いいたします。</label
           >
         </div>
         <div class="form-group">
-          <label for="space">  </label>
+          <label for="space">　</label>
           <input
             class="form-check-input"
             type="checkbox"
             value=""
-            id="checkAgree"
-            onchange="onAgree();"
+            id="agree"
             required
           />
-          <label for="checkAgree">上記の内容を確認し、同意しました。</label>
+          <label for="agree">上記の内容を確認し、同意しました。</label>
         </div>
         <div class="form-group">
           <input
             type="submit"
-            id="submitbtn"
+            id="submit-btn"
             value="登録"
             class="btn btn-primary"
             disabled
           />
+          <!--<button type="button" class="btn btn-primary" onclick="OnPost();" >登録</button> -->
         </div>
       </form>
     </div>

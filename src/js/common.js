@@ -14,7 +14,8 @@ function getLineProfile(liffId) {
         .then(function (profile) {
           // profile情報セット
           document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("displaynamefield").value = profile.displayName;
+          document.getElementById("displaynamefield").value =
+            profile.displayName;
           // アラート出力
           var nowDate = new Date();
           var userId = profile.userId;
@@ -22,7 +23,7 @@ function getLineProfile(liffId) {
           var getLanguage = liff.getLanguage();
           var isInClient = liff.isInClient();
           var isLoggedIn = liff.isLoggedIn();
-          alert(nowDate + " " + userId + " " + displayName );
+          //window.alert(nowDate + " " + userId + " " + displayName + " " + getLanguage + " " + isInClient + " " + isLoggedIn);
         })
         .catch(function (error) {
           alert("LINEから起動してください:" + liffId);
