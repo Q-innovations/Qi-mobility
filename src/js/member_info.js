@@ -65,11 +65,11 @@ function onbNamekana() {
 }
 
 // 同意チェックボックス処理
-// 「同意する」のチェックボックスを取得
+// 「同意する」のチェックボックス
 const agreeCheckbox = document.getElementById("agree");
-// 送信ボタンを取得
+// 送信ボタン
 const submitBtn = document.getElementById("submit-btn");
-// チェックボックスをクリック
+
 agreeCheckbox.addEventListener("click", () => {
   // チェックされている場合
   if (agreeCheckbox.checked === true) {

@@ -13,7 +13,7 @@ const agreeCheckbox = document.getElementById("agree");
 // 送信ボタン
 const submitBtn = document.getElementById("submit-btn");
 
-agreeCheckbox.addEventListener("click", () => {
+agreeCheckbox.addEventListener('change', (event) => {
   // チェックされている場合
   if (agreeCheckbox.checked === true) {
     submitBtn.disabled = false; // disabledを外す
