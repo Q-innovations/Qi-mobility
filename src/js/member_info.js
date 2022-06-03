@@ -3,30 +3,34 @@ window.addEventListener("load", function () {
   // Bootstrap Inline Form Validation Engine
   jQuery("#inputform").validationEngine("attach", {
     ajaxFormValidation: true,
+    onBeforeAjaxFormValidation: beforeCall,
     promptPosition: "topRight",
   });
+  function beforeCall() {
+    //すべてOK!!
+    //alert('OK!!');
+  }
   // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
   var liffId = "1657149830-O4YdRWr2";
   getLineProfile(liffId);
   // ユーザー情報取得
-  //getGasUserinfo();
+  getGasUserinfo();
+
+
 });
 
-/*
 // ユーザー情報取得
-function getGasUserinfo() {
+function getGasUserinfo(userId) {
   // GASでデプロイしたWebアプリケーションのURL
   // https://ryjkmr.com/gas-web-application-usual-way/
-  //  let URL =
-  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
   let URL =
-    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
+    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
 
   let SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-    displaynamefield: document.getElementById("tel").value,
+    displaynamefield: document.getElementById("tel").value
   };
   let postparam = {
     method: "POST",
@@ -36,23 +40,23 @@ function getGasUserinfo() {
   };
   // GAS doPost
   fetch(URL, postparam)
-    .then((response) => response.json())
-    // 成功した処理
-    .then((data) => {
-      //JSONから配列に変換
-      const object = data;
-      //inputタグそれぞれに取得したデータを設定
-      $("input").each(function (index, element) {
-        if (object[0][$(element).attr("name")]) {
-          $(element).val([object[0][$(element).attr("name")]]);
-        }
+      .then(response => response.json())
+      /*成功した処理*/
+      .then(data => {
+          //JSONから配列に変換
+          const object = data;
+          //inputタグそれぞれに取得したデータを設定
+          $('input').each(function (index, element) {
+              if (object[0][$(element).attr('name')]) {
+                  $(element).val([object[0][$(element).attr('name')]]);
+              }
+          });
       });
-    });
 }
-*/
+
 
 // 代表者かな処理
-function onNamekana() {
+function onbNamekana() {
   // 利用者かな１と誕生日１をセット
   document.getElementById("riyo1").value =
     document.getElementById("namekana").value;
@@ -60,35 +64,43 @@ function onNamekana() {
   document.getElementById("bd1").value = "2000-01-01";
 }
 
-
 // 同意チェックボックス処理
-function onAgree() {
-  if (document.getElementById("checkAgree").checked) {
-    document.getElementById("submitbtn").disabled = false;
-  } else {
-    document.getElementById("submitbtn").disabled = true;
-  }
-}
+// 「同意する」のチェックボックス
+const agreeCheckbox = document.getElementById("agree");
+// 送信ボタン
+const submitBtn = document.getElementById("submit-btn");
 
+agreeCheckbox.addEventListener("click", () => {
+  // チェックされている場合
+  if (agreeCheckbox.checked === true) {
+    submitBtn.disabled = false; // disabledを外す
+  }
+  // チェックされていない場合
+  else {
+    submitBtn.disabled = true; // disabledを付与
+  }
+});
 
 // 登録ボタン処理
-//$('form').submit(function() {
-window.addEventListener("submit", function () {
-// validate結果を取得
-//  var validateResult = jQuery("#inputform").validationEngine("validate");
-//  if (!validateResult) {
+$("form").submit(function () {
+  // validate結果を取得
+  var validateResult = $("#inputform").validationEngine("validate");
+  if (!validateResult) {
     // validate結果NG
-//    window.alert("入力エラーがあります。");
-//  } else {
+    window.alert("入力エラーがあります。");
+  } else {
     // validate結果OK
     // LINE起動チェック
     //if (liff.isInClient()) {
-    if (liff.isInClient()) {
+    if (!liff.isInClient()) {
       window.alert("LINEから起動してください");
     } else {
       // UserInfoスプレッドシート登録
       insertUserInfo();
-
+      // UserInfoスプレッドシート更新
+      // updateUserInfo();
+      // LINEメッセージ送信
+//      var Messages = "会員情報登録しました！会員ID： " + document.getElementById("useridprofilefield").value
       liff
         .sendMessages([
           {
@@ -107,48 +119,46 @@ window.addEventListener("submit", function () {
           window.alert("LINEsendMessages失敗: " + error);
         });
     }
- // }
+  }
   return false;
+
+  // insertUserInfo
+  function insertUserInfo() {
+    // GASでデプロイしたWebアプリケーションのURL
+    // https://ryjkmr.com/gas-web-application-usual-way/
+    let URL =
+      "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+
+    let SendDATA = {
+      action: "InsUserinfo",
+      useridprofilefield: document.getElementById("useridprofilefield").value,
+      displaynamefield: document.getElementById("displaynamefield").value,
+      name: document.getElementById("name").value,
+      namekana: document.getElementById("namekana").value,
+      tel: document.getElementById("tel").value,
+      zip: document.getElementById("zip").value,
+      adress1: document.getElementById("adress1").value,
+      adress2: document.getElementById("adress2").value,
+      riyo1: document.getElementById("riyo1").value,
+      bd1: document.getElementById("bd1").value,
+      riyo2: document.getElementById("riyo2").value,
+      bd2: document.getElementById("bd2").value,
+      riyo3: document.getElementById("riyo3").value,
+      bd3: document.getElementById("bd3").value,
+      riyo4: document.getElementById("riyo4").value,
+      bd4: document.getElementById("bd4").value,
+      riyo5: document.getElementById("riyo5").value,
+      bd5: document.getElementById("bd5").value,
+      riyo6: document.getElementById("riyo6").value,
+      bd6: document.getElementById("bd6").value
+    };
+    let postparam = {
+      method: "POST",
+      mode: "no-cors",
+      "Content-Type": "application/x-www-form-urlencoded",
+      body: JSON.stringify(SendDATA),
+    };
+    // GAS doPost
+    fetch(URL, postparam);
+  }
 });
-
-// insertUserInfo
-function insertUserInfo() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
-  //  let URL =
-  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-  let URL =
-    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
-
-  let SendDATA = {
-    action: "InsUserinfo",
-    useridprofilefield: document.getElementById("useridprofilefield").value,
-    displaynamefield: document.getElementById("displaynamefield").value,
-    name: document.getElementById("name").value,
-    namekana: document.getElementById("namekana").value,
-    tel: document.getElementById("tel").value,
-    zip: document.getElementById("zip").value,
-    adress1: document.getElementById("adress1").value,
-    adress2: document.getElementById("adress2").value,
-    riyo1: document.getElementById("riyo1").value,
-    bd1: document.getElementById("bd1").value,
-    riyo2: document.getElementById("riyo2").value,
-    bd2: document.getElementById("bd2").value,
-    riyo3: document.getElementById("riyo3").value,
-    bd3: document.getElementById("bd3").value,
-    riyo4: document.getElementById("riyo4").value,
-    bd4: document.getElementById("bd4").value,
-    riyo5: document.getElementById("riyo5").value,
-    bd5: document.getElementById("bd5").value,
-    riyo6: document.getElementById("riyo6").value,
-    bd6: document.getElementById("bd6").value,
-  };
-  let postparam = {
-    method: "POST",
-    mode: "no-cors",
-    "Content-Type": "application/x-www-form-urlencoded",
-    body: JSON.stringify(SendDATA),
-  };
-  // GAS doPost
-  fetch(URL, postparam);
-}

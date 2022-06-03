@@ -73,7 +73,7 @@
             aria-label="会場"
             name="eplace1"
             id="eplace1"
-            onchange="onbEplace1();"
+            onblur="onbEplace1();"
           >
             <option value="1">2022年06月26日(日)リバーサイド東櫛原</option>
             <option value="2">2022年10月XX日(土)＋ｙｏｕ</option>
@@ -134,17 +134,12 @@
           <label for="title">≪予約会場、利用者、開始時刻を入力ください≫</label>
         </div>
         <input
-        type="hidden"
-        id="useridprofilefield"
-        name="useridprofilefield"
-        value="U91f9611376221676612af6c1d690a8a5"
-      />
-      <input
-        type="hidden"
-        id="tel"
-        name="tel"
-        value="09090768665"
-      />
+          type="hidden"
+          id="displaynamefield"
+          name="displaynamefield"
+          value="displaynamefield"
+        />
+        <input type="hidden" id="tel" name="tel" value="tel" />
         <!-- エリアはとりあえず福岡固定 -->
         <input type="hidden" id="erea" name="erea" value="福岡" />
         <div class="form-group">
