@@ -16,10 +16,9 @@ window.addEventListener("load", function () {
   getLineProfile(liffId);
   // ユーザー情報取得
   //getGasUserinfo();
-
-
 });
 
+/*
 // ユーザー情報取得
 function getGasUserinfo() {
   // GASでデプロイしたWebアプリケーションのURL
@@ -32,7 +31,7 @@ function getGasUserinfo() {
   let SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-    displaynamefield: document.getElementById("tel").value
+    displaynamefield: document.getElementById("tel").value,
   };
   let postparam = {
     method: "POST",
@@ -42,20 +41,20 @@ function getGasUserinfo() {
   };
   // GAS doPost
   fetch(URL, postparam)
-    .then(response => response.json())
-    /*成功した処理*/
-    .then(data => {
+    .then((response) => response.json())
+    // 成功した処理
+    .then((data) => {
       //JSONから配列に変換
       const object = data;
       //inputタグそれぞれに取得したデータを設定
-      //          $('input').each(function (index, element) {
-      //              if (object[0][$(element).attr('name')]) {
-      //                  $(element).val([object[0][$(element).attr('name')]]);
-      //              }
-      //          });
+      $("input").each(function (index, element) {
+        if (object[0][$(element).attr("name")]) {
+          $(element).val([object[0][$(element).attr("name")]]);
+        }
+      });
     });
 }
-
+*/
 
 // 代表者かな処理
 function onNamekana() {
@@ -66,21 +65,22 @@ function onNamekana() {
   document.getElementById("bd1").value = "2000-01-01";
 }
 
+/*
 // 同意チェックボックス処理
 function onAgree() {
-  if (document.getElementById('checkAgree').checked) {
-    document.getElementById('submit-btn').disabled = false;
-  }
-  else {
-    document.getElementById('submit-btn').disabled = true;
+  if (document.getElementById("checkAgree").checked) {
+    document.getElementById("submitbtn").disabled = false;
+  } else {
+    document.getElementById("submitbtn").disabled = true;
   }
 }
-
+*/
 
 // 登録ボタン処理
-$("form").submit(function () {
-  // validate結果を取得
-  var validateResult = $("#inputform").validationEngine("validate");
+//$('form').submit(function() {
+window.addEventListener("submit", function () {
+// validate結果を取得
+  var validateResult = jQuery("#inputform").validationEngine("validate");
   if (!validateResult) {
     // validate結果NG
     window.alert("入力エラーがあります。");
@@ -92,18 +92,15 @@ $("form").submit(function () {
       window.alert("LINEから起動してください");
     } else {
       // UserInfoスプレッドシート登録
-      insertUserInfo();
-      // UserInfoスプレッドシート更新
-      // updateUserInfo();
-      // LINEメッセージ送信
-      //      var Messages = "会員情報登録しました！会員ID： " + document.getElementById("useridprofilefield").value
+      //insertUserInfo();
+
       liff
         .sendMessages([
           {
             type: "text",
             text: JSON.stringify(
               "会員情報登録しました！会員ID： " +
-              document.getElementById("useridprofilefield").value
+                document.getElementById("useridprofilefield").value
             ),
           },
         ])
@@ -126,7 +123,7 @@ function insertUserInfo() {
   //  let URL =
   //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
   let URL =
-  "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
+    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
 
   let SendDATA = {
     action: "InsUserinfo",
@@ -149,7 +146,7 @@ function insertUserInfo() {
     riyo5: document.getElementById("riyo5").value,
     bd5: document.getElementById("bd5").value,
     riyo6: document.getElementById("riyo6").value,
-    bd6: document.getElementById("bd6").value
+    bd6: document.getElementById("bd6").value,
   };
   let postparam = {
     method: "POST",
