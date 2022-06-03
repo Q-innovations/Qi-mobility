@@ -3,13 +3,8 @@ window.addEventListener("load", function () {
   // Bootstrap Inline Form Validation Engine
   jQuery("#inputform").validationEngine("attach", {
     ajaxFormValidation: true,
-    onBeforeAjaxFormValidation: beforeCall,
     promptPosition: "topRight",
   });
-  function beforeCall() {
-    //すべてOK!!
-    //alert('OK!!');
-  }
   // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
   var liffId = "1657149830-O4YdRWr2";
@@ -65,7 +60,7 @@ function onNamekana() {
   document.getElementById("bd1").value = "2000-01-01";
 }
 
-/*
+
 // 同意チェックボックス処理
 function onAgree() {
   if (document.getElementById("checkAgree").checked) {
@@ -74,25 +69,25 @@ function onAgree() {
     document.getElementById("submitbtn").disabled = true;
   }
 }
-*/
+
 
 // 登録ボタン処理
 //$('form').submit(function() {
 window.addEventListener("submit", function () {
 // validate結果を取得
-  var validateResult = jQuery("#inputform").validationEngine("validate");
-  if (!validateResult) {
+//  var validateResult = jQuery("#inputform").validationEngine("validate");
+//  if (!validateResult) {
     // validate結果NG
-    window.alert("入力エラーがあります。");
-  } else {
+//    window.alert("入力エラーがあります。");
+//  } else {
     // validate結果OK
     // LINE起動チェック
     //if (liff.isInClient()) {
-    if (!liff.isInClient()) {
+    if (liff.isInClient()) {
       window.alert("LINEから起動してください");
     } else {
       // UserInfoスプレッドシート登録
-      //insertUserInfo();
+      insertUserInfo();
 
       liff
         .sendMessages([
@@ -112,7 +107,7 @@ window.addEventListener("submit", function () {
           window.alert("LINEsendMessages失敗: " + error);
         });
     }
-  }
+ // }
   return false;
 });
 
