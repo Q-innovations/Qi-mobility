@@ -89,8 +89,8 @@ window.addEventListener("submit", function () {
         window.alert("LINEsendMessages失敗: " + error);
       });
   }
-  return false;
-});
+return false;
+})
 
 // insertUserInfo
 function insertUserInfo() {
