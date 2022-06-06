@@ -1,15 +1,5 @@
 // ロード時処理
 window.addEventListener("load", function () {
-  // Bootstrap Inline Form Validation Engine
-  jQuery("#inputform").validationEngine("attach", {
-    ajaxFormValidation: true,
-    onBeforeAjaxFormValidation: beforeCall,
-    promptPosition: "topRight",
-  });
-  function beforeCall() {
-    //すべてOK!!
-    alert('チェックOK!!');
-  }
   // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
   var liffId = "1657149830-k11N9eMA";
@@ -44,7 +34,7 @@ function getGasUserinfo() {
   let SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-    tel: document.getElementById("tel").value,
+//    tel: document.getElementById("tel").value,
   };
   let postparam = {
     method: "POST",
@@ -164,67 +154,59 @@ function onbEplace1() {
 }
 
 // 登録ボタン処理
-$("form").submit(function () {
-  // validate結果を取得
-  var validateResult = $("#inputform").validationEngine("validate");
-  if (!validateResult) {
-    // validate結果NG
-    window.alert("入力エラーがあります。");
+window.addEventListener("submit", function () {
+  // LINE起動チェック
+  //if (liff.isInClient()) { //PCよりWEBで確認
+  if (!liff.isInClient()) {
+    window.alert("LINEから起動してください");
   } else {
-    // validate結果OK
-    // LINE起動チェック
-    //if (liff.isInClient()) { //PCよりWEBで確認
-    if (!liff.isInClient()) {
-      window.alert("LINEから起動してください");
-    } else {
-      // イベント予約登録
-      insertEventReserve();
-      // PAYPAYAPI連携
-      // PAYPAYIDと詳細と金額を送信して支払い
-      // paymentPaypay();
-      // LINEメッセージ送信
-      liff
-        .sendMessages([
-          {
-            type: "text",
-            text: JSON.stringify(
-              "イベント予約完了しました！PAYPAYからQRコードを読み取り、500円お支払いください。支払い確認のため支払った後のスクリーンショットを張り付けてください。"
-            ),
-          },
-        ])
-        .then(() => {
-          // window.alert('Message sent');
-          liff.closeWindow();
-        })
-        .catch((error) => {
-          window.alert("LINEsendMessages失敗: " + error);
-        });
-    }
-  }
-  return false;
-
-  // イベント予約登録
-  function insertEventReserve() {
-    // GASでデプロイしたWebアプリケーションのURL
-    // https://ryjkmr.com/gas-web-application-usual-way/
-    let URL =
-      "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-
-    let SendDATA = {
-      action: "InsEventReserve",
-      useridprofilefield: document.getElementById("useridprofilefield").value,
-      bd4: document.getElementById("eplace2").value,
-      riyo5: document.getElementById("riyokana").value,
-      bd5: document.getElementById("starttime").value,
-      riyo6: document.getElementById("menu").value,
-    };
-    let postparam = {
-      method: "POST",
-      mode: "no-cors",
-      "Content-Type": "application/x-www-form-urlencoded",
-      body: JSON.stringify(SendDATA),
-    };
-    // GAS doPost
-    fetch(URL, postparam);
+    // イベント予約登録
+    insertEventReserve();
+    // PAYPAYAPI連携
+    // PAYPAYIDと詳細と金額を送信して支払い
+    // paymentPaypay();
+    // LINEメッセージ送信
+    liff
+      .sendMessages([
+        {
+          type: "text",
+          text: JSON.stringify(
+            "イベント予約完了しました！PAYPAYからQRコードを読み取り、500円お支払いください。支払い確認のため支払った後のスクリーンショットを張り付けてください。"
+          ),
+        },
+      ])
+      .then(() => {
+        // window.alert('Message sent');
+        liff.closeWindow();
+      })
+      .catch((error) => {
+        window.alert("LINEsendMessages失敗: " + error);
+      });
+    return false;
   }
 });
+
+// イベント予約登録
+function insertEventReserve() {
+  // GASでデプロイしたWebアプリケーションのURL
+  // https://ryjkmr.com/gas-web-application-usual-way/
+  let URL =
+    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+
+  let SendDATA = {
+    action: "InsEventReserve",
+    useridprofilefield: document.getElementById("useridprofilefield").value,
+    eplace: document.getElementById("eplace2").value,
+    riyokana: document.getElementById("riyokana").value,
+    starttime: document.getElementById("starttime").value,
+    menu: document.getElementById("menu").value,
+  };
+  let postparam = {
+    method: "POST",
+    mode: "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam);
+}
