@@ -20,7 +20,7 @@ function getGasUserinfo() {
   let SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-//    displaynamefield: document.getElementById("tel").value,
+    //    displaynamefield: document.getElementById("tel").value,
   };
   let postparam = {
     method: "POST",
@@ -88,8 +88,8 @@ window.addEventListener("submit", function () {
       .catch((error) => {
         window.alert("LINEsendMessages失敗: " + error);
       });
-    return false;
   }
+  return false;
 });
 
 // insertUserInfo
