@@ -1,15 +1,5 @@
 // ロード時処理
 window.addEventListener("load", function () {
-  // Bootstrap Inline Form Validation Engine
-  jQuery("#inputform").validationEngine("attach", {
-    ajaxFormValidation: true,
-    onBeforeAjaxFormValidation: beforeCall,
-    promptPosition: "topRight",
-  });
-  function beforeCall() {
-    //すべてOK!!
-    //alert('OK!!');
-  }
   // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
   var liffId = "1657149830-O4YdRWr2";
@@ -18,7 +8,6 @@ window.addEventListener("load", function () {
   //getGasUserinfo();
 });
 
-/*
 // ユーザー情報取得
 function getGasUserinfo() {
   // GASでデプロイしたWebアプリケーションのURL
@@ -54,7 +43,6 @@ function getGasUserinfo() {
       });
     });
 }
-*/
 
 // 代表者かな処理
 function onNamekana() {
@@ -65,7 +53,6 @@ function onNamekana() {
   document.getElementById("bd1").value = "2000-01-01";
 }
 
-/*
 // 同意チェックボックス処理
 function onAgree() {
   if (document.getElementById("checkAgree").checked) {
@@ -74,44 +61,33 @@ function onAgree() {
     document.getElementById("submitbtn").disabled = true;
   }
 }
-*/
 
 // 登録ボタン処理
-//$('form').submit(function() {
 window.addEventListener("submit", function () {
-// validate結果を取得
-  var validateResult = jQuery("#inputform").validationEngine("validate");
-  if (!validateResult) {
-    // validate結果NG
-    window.alert("入力エラーがあります。");
+  // LINE起動チェック
+  //if (liff.isInClient()) { //PC確認時
+  if (!liff.isInClient()) {
+    window.alert("LINEから起動してください");
   } else {
-    // validate結果OK
-    // LINE起動チェック
-    //if (liff.isInClient()) {
-    if (!liff.isInClient()) {
-      window.alert("LINEから起動してください");
-    } else {
-      // UserInfoスプレッドシート登録
-      //insertUserInfo();
+    // UserInfoスプレッドシート登録
+    insertUserInfo();
 
-      liff
-        .sendMessages([
-          {
-            type: "text",
-            text: JSON.stringify(
-              "会員情報登録しました！会員ID： " +
-                document.getElementById("useridprofilefield").value
-            ),
-          },
-        ])
-        .then(() => {
-          // window.alert('Message sent');
-          liff.closeWindow();
-        })
-        .catch((error) => {
-          window.alert("LINEsendMessages失敗: " + error);
-        });
-    }
+    liff
+      .sendMessages([
+        {
+          type: "text",
+          text: JSON.stringify(
+            "会員情報登録しました！会員ID： " +
+              document.getElementById("useridprofilefield").value
+          ),
+        },
+      ])
+      .then(() => {
+        liff.closeWindow();
+      })
+      .catch((error) => {
+        window.alert("LINEsendMessages失敗: " + error);
+      });
   }
   return false;
 });
@@ -153,6 +129,10 @@ function insertUserInfo() {
     mode: "no-cors",
     "Content-Type": "application/x-www-form-urlencoded",
     body: JSON.stringify(SendDATA),
+    //    headers: {
+    //      Accept: 'application/json',
+    //      'Content-Type': 'application/x-www-form-urlencoded',
+    //    }
   };
   // GAS doPost
   fetch(URL, postparam);
