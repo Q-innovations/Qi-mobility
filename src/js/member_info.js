@@ -90,7 +90,7 @@ window.addEventListener("submit", function () {
       });
   }
 return false;
-})
+
 
 // insertUserInfo
 function insertUserInfo() {
@@ -137,3 +137,4 @@ function insertUserInfo() {
   // GAS doPost
   fetch(URL, postparam);
 }
+});
