@@ -63,6 +63,7 @@ function getGasUserinfo() {
 
   let SendDATA = {
     action: "SelUserinfo",
+//    useridprofilefield: document.getElementById("useridprofilefield").value,
     useridprofilefield: document.getElementById("useridprofilefield").value,
   };
   let postparam = {

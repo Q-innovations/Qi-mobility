@@ -59,7 +59,7 @@ function getGasUserinfo() {
   var SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-    displaynamefield: document.getElementById("tel").value,
+//    displaynamefield: document.getElementById("tel").value,
   };
   var postparam = {
     method: "POST",
@@ -73,12 +73,12 @@ function getGasUserinfo() {
     // 成功した処理
     .then((data) => {
       //JSONから配列に変換
-      const object = data;
-      window.alert("data：" + data);
+      var objUserinfo = data;
+      window.alert("objUserinfo:" + objUserinfo);
       //inputタグそれぞれに取得したデータを設定
       $("input").each(function (index, element) {
-        if (object[0][$(element).attr("name")]) {
-          $(element).val([object[0][$(element).attr("name")]]);
+        if (objUserinfo[0][$(element).attr("name")]) {
+          $(element).val([objUserinfo[0][$(element).attr("name")]]);
         }
       });
     });
