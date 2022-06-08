@@ -1,11 +1,10 @@
 // LINEプロフィール取得
-function getLineProfile(liffId) {
-//  alert("liffId:" + liffId);
-  var nowDate = new Date();
+function getLineProfile(_LINE_LIFF_ID) {
+//  alert("liffId:" + _LINE_LIFF_ID);
   // liff処理
   liff
     .init({
-      liffId: liffId,
+      liffId: _LINE_LIFF_ID,
     })
     .then(() => {
       // LINEプロフィール取得表示
@@ -19,6 +18,7 @@ function getLineProfile(liffId) {
           document.getElementById("name").value =
             profile.displayName;
           // アラート出力
+          var nowDate = new Date();
           var userId = profile.userId;
           var displayName = profile.displayName;
           var getLanguage = liff.getLanguage();
@@ -27,7 +27,7 @@ function getLineProfile(liffId) {
           alert(nowDate + " " + userId + " " + displayName);
           return true;
         })
-        .catch(function (error) {
+        .catch(function (_error) {
           return false;
         });
     });
@@ -35,6 +35,7 @@ function getLineProfile(liffId) {
 
 // LINEメッセージテキスト送信
 function sendLineMessages(lineMsg) {
+  alert("liffId:" + LINE_LIFF_ID + "liffId:" + lineMsg);
   // liff処理
   liff
     .sendMessages([
