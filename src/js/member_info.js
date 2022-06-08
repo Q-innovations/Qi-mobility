@@ -5,7 +5,6 @@ window.addEventListener("load", function () {
   // LINEプロフィール取得
   if (!getLineProfile(liffId)) {
     window.alert("LINEから起動してください");
-    return false;
   } else {
     // ユーザー情報取得
     //getGasUserinfo();
@@ -75,7 +74,7 @@ function onAgree() {
 window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
-  if (!liff.isInClient()) {
+  if (liff.isInClient()) {
     window.alert("LINEから起動してください");
     return false;
   } else {
@@ -88,9 +87,9 @@ window.addEventListener("submit", function () {
       var lineMsg =
         "会員情報登録しました！会員ID： " +
         document.getElementById("useridprofilefield").value;
-      window.alert("lineMsg:" + lineMsg);
+//      window.alert("lineMsg:" + lineMsg);
       // Lineメッセージ送信
-      if (!sendLineMessages()) {
+      if (!sendLineMessages(lineMsg)) {
         window.alert("Line送信に失敗しました。");
         return false;
       } else {
@@ -146,15 +145,5 @@ function insertUserInfo() {
   };
   // GAS doPost
   fetch(URL, postparam)
-    .then(function (res) {
-      window.alert("res:" + res);
-      return res.text();
-    })
-    .then(function (json) {
-      text = json;
-      window.alert("戻り値:" + json);
-    })
-    .catch(function (exception) {
-      window.alert("エラー:" + exception);
-    });
+  return true;
 }

@@ -71,7 +71,7 @@
             class="size-input-tel"
             placeholder="(例)09012345678"
             title="数字10桁11桁"
-            pattern="[\d{10,11}$]*"
+            pattern="\d{10,11}"
             required
           />
         </div>
@@ -97,7 +97,7 @@
             class="size-input-zip"
             placeholder="(例)1234567"
             title="数字7桁"
-            pattern="[\d{7}$]*"
+            pattern="\d{7}"
             required
             onkeyup="AjaxZip3.zip2addr(this,'','adress1','adress1');"
           />

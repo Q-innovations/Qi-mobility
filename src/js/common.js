@@ -1,6 +1,6 @@
 // LINEプロフィール取得
 function getLineProfile(liffId) {
-  alert("liffId:" + liffId);
+//  alert("liffId:" + liffId);
   var nowDate = new Date();
   // liff処理
   liff
@@ -28,7 +28,6 @@ function getLineProfile(liffId) {
           return true;
         })
         .catch(function (error) {
-          alert(nowDate + " " + userId + " " + displayName);
           return false;
         });
     });
