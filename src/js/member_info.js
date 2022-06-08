@@ -74,7 +74,7 @@ function onAgree() {
 window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
-  if (liff.isInClient()) {
+  if (!liff.isInClient()) {
     window.alert("LINEから起動してください");
     return false;
   } else {
@@ -87,7 +87,6 @@ window.addEventListener("submit", function () {
       var lineMsg =
         "会員情報登録しました！会員ID： " +
         document.getElementById("useridprofilefield").value;
-//      window.alert("lineMsg:" + lineMsg);
       // Lineメッセージ送信
       if (!sendLineMessages(lineMsg)) {
         window.alert("Line送信に失敗しました。");
@@ -96,6 +95,7 @@ window.addEventListener("submit", function () {
         // liffクローズ
         window.alert("Line送信に成功しました。");
         liff.closeWindow();
+        return false;
       }
     }
   }
