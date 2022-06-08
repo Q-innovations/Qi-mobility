@@ -85,8 +85,10 @@ window.addEventListener("submit", function () {
       return false;
     } else {
       // Lineメッセージ登録
-      var lineMsg = "会員情報登録しました！会員ID： " + document.getElementById("useridprofilefield").value;
-      window.alert("lineMsg:"+ lineMsg );
+      var lineMsg =
+        "会員情報登録しました！会員ID： " +
+        document.getElementById("useridprofilefield").value;
+      window.alert("lineMsg:" + lineMsg);
       // Lineメッセージ送信
       if (!sendLineMessages()) {
         window.alert("Line送信に失敗しました。");
@@ -143,14 +145,16 @@ function insertUserInfo() {
     //    }
   };
   // GAS doPost
-  //  fetch(URL, postparam);
-  let response = fetch(URL, postparam);
-
-  if (response.ok) { // HTTP ステータスが 200-299 の場合
-    // レスポンスの本文を取得
-    return true;
-  } else {
-    alert("HTTP-Error: " + response.status);
-    return false;
-  }
+  fetch(URL, postparam)
+    .then(function (res) {
+      window.alert("res:" + res);
+      return res.text();
+    })
+    .then(function (json) {
+      text = json;
+      window.alert("戻り値:" + json);
+    })
+    .catch(function (exception) {
+      window.alert("エラー:" + exception);
+    });
 }
