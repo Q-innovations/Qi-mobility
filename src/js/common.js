@@ -1,6 +1,6 @@
 // LINEプロフィール取得
 function getLineProfile(liffId) {
-//  alert("liffId:" + liffId);
+  alert("liffId:" + liffId);
   // liff処理
   liff
     .init({
