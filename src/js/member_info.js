@@ -84,9 +84,9 @@ function onAgree() {
     document.getElementById("submitbtn").disabled = true;
   }
 }
-
+onSubmit;
 // 登録ボタン処理
-window.addEventListener("submit", function () {
+function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
   if (!liff.isInClient()) {
@@ -129,14 +129,15 @@ window.addEventListener("submit", function () {
         // liffクローズ
         window.alert("Line送信に成功しました。");
         liff.closeWindow();
-        return false;
+        return true;
       }
     */
+      return false;
     }
     return false;
   }
   return false;
-});
+}
 
 // insertUserInfo
 function insertUserInfo() {
