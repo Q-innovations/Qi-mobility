@@ -1,9 +1,9 @@
 // ロード時処理
 window.addEventListener("load", function () {
   // LINE DevelopersのliffId★各自変更
-  var liffId = "1657149830-O4YdRWr2";
+  const LINE_LIFF_ID = "1657149830-O4YdRWr2";
   // LINEプロフィール取得
-  if (!getLineProfile(liffId)) {
+  if (!getLineProfile(LINE_LIFF_ID)) {
     window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -37,7 +37,7 @@ function getGasUserinfo() {
     // 成功した処理
     .then((data) => {
       //JSONから配列に変換
-      const object = data;
+      var object = data;
       //inputタグそれぞれに取得したデータを設定
       $("input").each(function (index, element) {
         if (object[0][$(element).attr("name")]) {
@@ -46,11 +46,6 @@ function getGasUserinfo() {
       });
     });
 }
-
-// リアルタイムバリデーションならない
-$(".name").on("change", function () {
-  this.reportValidity();
-});
 
 // 代表者かな処理
 function onNamekana() {
