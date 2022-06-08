@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
   const LINE_LIFF_ID = "1657149830-O4YdRWr2";
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
-    window.alert("load:LINEから起動してください");
+    window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
     //getGasUserinfo();
@@ -37,7 +37,7 @@ function getGasUserinfo() {
     // 成功した処理
     .then((data) => {
       //JSONから配列に変換
-      var object = data;
+      const object = data;
       //inputタグそれぞれに取得したデータを設定
       $("input").each(function (index, element) {
         if (object[0][$(element).attr("name")]) {
@@ -46,6 +46,26 @@ function getGasUserinfo() {
       });
     });
 }
+
+// リアルタイムバリデーションならない
+$('#name').on("change", function () {
+  this.reportValidity();
+});
+$("#namekana").on("change", function () {
+  this.reportValidity();
+});
+$("#tel").on("change", function () {
+  this.reportValidity();
+});
+$("#zip").on("change", function () {
+  this.reportValidity();
+});
+$("#adress1").on("change", function () {
+  this.reportValidity();
+});
+$("#adress2").on("change", function () {
+  this.reportValidity();
+});
 
 // 代表者かな処理
 function onNamekana() {
@@ -70,7 +90,7 @@ window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
   if (!liff.isInClient()) {
-    window.alert("submit:LINEから起動してください");
+    window.alert("LINEから起動してください");
     return false;
   } else {
     //ユーザー情報登録
