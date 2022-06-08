@@ -98,28 +98,30 @@ function onSubmit() {
       window.alert("ユーザー情報登録に失敗しました。");
       return false;
     } else {
-/*
       // Lineメッセージ登録
       var lineMsg =
         "会員情報登録しました！会員ID： " +
         document.getElementById("useridprofilefield").value;
       // Lineメッセージ送信
-    */      
-      if (!sendLineMessages(lineMsg)) {
-        window.alert("Line送信に失敗しました。");
-        return false;
-      } else {
-        // liffクローズ
-        window.alert("Line送信に成功しました。");
-        liff.closeWindow();
-        return true;
-      }
-
+      liff
+        .sendMessages([
+          {
+            type: "text",
+            text: JSON.stringify(lineMsg),
+          },
+        ])
+        .then(() => {
+          window.alert("LINEsendMessages成功:");
+          liff.closeWindow();
+          return true;
+        })
+        .catch((error) => {
+          window.alert("LINEsendMessages失敗: " + error);
+          return false;
+        });
       return false;
     }
-    return false;
   }
-  return false;
 }
 
 // insertUserInfo
@@ -167,25 +169,4 @@ function insertUserInfo() {
   // GAS doPost
   fetch(URL, postparam);
   return true;
-}
-
-// LINEメッセージテキスト送信
-function sendLineMessages(lineMsg) {
-  window.alert("ine送信lineMsgセット：" + lineMsg);
-  // liff処理
-  liff
-    .sendMessages([
-      {
-        type: "text",
-        text: JSON.stringify(lineMsg),
-      },
-    ])
-    .then(() => {
-      window.alert("LINEsendMessages成功:");
-      return true;
-    })
-    .catch((error) => {
-      window.alert("LINEsendMessages失敗: " + error);
-      return false;
-    });
 }
