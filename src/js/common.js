@@ -41,6 +41,7 @@ function getLineProfile(liffId) {
 
 // LINEメッセージテキスト送信
 function sendLineMessages(lineMsg) {
+  /*
   liff
     .sendMessages([
       {
@@ -59,6 +60,8 @@ function sendLineMessages(lineMsg) {
     .catch(function (error) {
       window.alert("Error sending message: " + error);
     });
+*/
+
   // liff処理
   liff
     .sendMessages([
@@ -68,11 +71,13 @@ function sendLineMessages(lineMsg) {
       },
     ])
     .then(() => {
-      console.log("LINEsendMessages成功:");
+      window.alert("LINEsendMessages成功:");
       liff.closeWindow();
+      return false;
     })
     .catch((error) => {
-      console.log("LINEsendMessages失敗: " + error);
       window.alert("LINEsendMessages失敗: " + error);
+      return false;
     });
+    return false;
 }
