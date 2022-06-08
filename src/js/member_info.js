@@ -37,11 +37,11 @@ function getLineProfile(LINE_LIFF_ID) {
           var getLanguage = liff.getLanguage();
           var isInClient = liff.isInClient();
           var isLoggedIn = liff.isLoggedIn();
-          window.alert("liffＯＫ" + userId + " " + displayName);
+          //window.alert("liffＯＫ" + userId + " " + displayName);
           return true;
         })
         .catch(function (_error) {
-          window.alert("liffエラー");
+          window.alert("LINEから起動してください");
           return false;
         });
     });
@@ -74,6 +74,7 @@ function getGasUserinfo() {
     .then((data) => {
       //JSONから配列に変換
       const object = data;
+      window.alert("data：" + data);
       //inputタグそれぞれに取得したデータを設定
       $("input").each(function (index, element) {
         if (object[0][$(element).attr("name")]) {
@@ -147,7 +148,7 @@ function onSubmit() {
           },
         ])
         .then(() => {
-          //          window.alert("LINEsendMessages成功:");
+          //window.alert("LINEsendMessages成功:");
           liff.closeWindow();
           return true;
         })
@@ -197,10 +198,6 @@ function insertUserInfo() {
     mode: "no-cors",
     "Content-Type": "application/x-www-form-urlencoded",
     body: JSON.stringify(SendDATA),
-    //    headers: {
-    //      Accept: 'application/json',
-    //      'Content-Type': 'application/x-www-form-urlencoded',
-    //    }
   };
   // GAS doPost
   fetch(URL, postparam);
