@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
   const LINE_LIFF_ID = "1657149830-O4YdRWr2";
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
-    window.alert("LINEから起動してください");
+    //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
     //getGasUserinfo();
@@ -37,10 +37,11 @@ function getLineProfile(LINE_LIFF_ID) {
           var getLanguage = liff.getLanguage();
           var isInClient = liff.isInClient();
           var isLoggedIn = liff.isLoggedIn();
-          window.alert(nowDate + " " + userId + " " + displayName);
+          window.alert("liffＯＫ" + userId + " " + displayName);
           return true;
         })
         .catch(function (_error) {
+          window.alert("liffエラー");
           return false;
         });
     });
@@ -82,7 +83,7 @@ function getGasUserinfo() {
     });
 }
 
-// リアルタイムバリデーションならない
+// リアルタイムバリデーション
 $("#name").on("change", function () {
   this.reportValidity();
 });
@@ -146,7 +147,7 @@ function onSubmit() {
           },
         ])
         .then(() => {
-          window.alert("LINEsendMessages成功:");
+          //          window.alert("LINEsendMessages成功:");
           liff.closeWindow();
           return true;
         })
