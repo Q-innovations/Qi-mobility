@@ -135,6 +135,7 @@ window.addEventListener("submit", function () {
     }
     return false;
   }
+  return false;
 });
 
 // insertUserInfo
