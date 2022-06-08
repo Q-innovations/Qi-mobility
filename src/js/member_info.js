@@ -48,7 +48,7 @@ function getGasUserinfo() {
     });
 }
 
-// リアルタイムバリデーション
+// リアルタイムバリデーションならない
 $(".name").on("change", function () {
   this.reportValidity();
 });
@@ -75,7 +75,7 @@ function onAgree() {
 window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
-  if (liff.isInClient()) {
+  if (!liff.isInClient()) {
     window.alert("LINEから起動してください");
     return false;
   } else {
@@ -85,9 +85,9 @@ window.addEventListener("submit", function () {
       return false;
     } else {
       // Lineメッセージ登録
-      var lineMsg =
-        "会員情報登録しました！会員ID： " +
-        document.getElementById("useridprofilefield").value;
+      var lineMsg = "会員情報登録しました！会員ID： " + document.getElementById("useridprofilefield").value;
+      window.alert("lineMsg:"+ lineMsg );
+      // Lineメッセージ送信
       if (!sendLineMessages()) {
         window.alert("Line送信に失敗しました。");
         return false;
@@ -148,7 +148,6 @@ function insertUserInfo() {
 
   if (response.ok) { // HTTP ステータスが 200-299 の場合
     // レスポンスの本文を取得
-    let json = await response.json();
     return true;
   } else {
     alert("HTTP-Error: " + response.status);
