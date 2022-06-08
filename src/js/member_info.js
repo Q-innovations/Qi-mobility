@@ -90,7 +90,7 @@ window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
   if (!liff.isInClient()) {
-    window.alert("LINEから起動してください");
+    window.alert("登録：LINEから起動してください");
     return false;
   } else {
     //ユーザー情報登録
@@ -98,11 +98,12 @@ window.addEventListener("submit", function () {
       window.alert("ユーザー情報登録に失敗しました。");
       return false;
     } else {
+      window.alert("ユーザー情報登録に成功しました。");
       // Lineメッセージ登録
       var lineMsg =
         "会員情報登録しました！会員ID： " +
         document.getElementById("useridprofilefield").value;
-      // Lineメッセージ送信
+        // Lineメッセージ送信
       if (!sendLineMessages(lineMsg)) {
         window.alert("Line送信に失敗しました。");
         return false;

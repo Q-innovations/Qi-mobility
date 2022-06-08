@@ -38,9 +38,8 @@ function getLineProfile(_LINE_LIFF_ID) {
 function sendLineMessages(lineMsg) {
   alert("liffId:" + LINE_LIFF_ID + "lineMsg:" + lineMsg);
   if (!liff.isInClient()) {
-    window.alert(
-      "LIFF is currently being opened in an external browser."
-    );
+    window.alert("LINEトークが見つかりません。");
+    return false;
   } else {
     // liff処理
     liff
