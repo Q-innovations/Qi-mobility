@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
   const LINE_LIFF_ID = "1657149830-O4YdRWr2";
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
-    window.alert("LINEから起動してください");
+    window.alert("load:LINEから起動してください");
   } else {
     // ユーザー情報取得
     //getGasUserinfo();
@@ -70,7 +70,7 @@ window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
   if (!liff.isInClient()) {
-    window.alert("LINEから起動してください");
+    window.alert("submit:LINEから起動してください");
     return false;
   } else {
     //ユーザー情報登録
