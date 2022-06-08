@@ -1,10 +1,9 @@
 // LINEプロフィール取得
-function getLineProfile(_LINE_LIFF_ID) {
-  //  alert("liffId:" + _LINE_LIFF_ID);
+function getLineProfile(LINE_LIFF_ID) {
   // liff処理
   liff
     .init({
-      liffId: _LINE_LIFF_ID,
+      liffId: LINE_LIFF_ID,
     })
     .then(() => {
       // LINEプロフィール取得表示

@@ -104,6 +104,24 @@ window.addEventListener("submit", function () {
         document.getElementById("useridprofilefield").value;
       // Lineメッセージ送信
       window.alert("ine送信lineMsgセット：" + lineMsg);
+      // liff処理
+      //          text: JSON.stringify(lineMsg),
+      liff
+        .sendMessages([
+          {
+            type: "text",
+            text: "サンプル",
+          },
+        ])
+        .then(() => {
+          window.alert("LINEsendMessages成功:");
+          return true;
+        })
+        .catch((error) => {
+          window.alert("LINEsendMessages失敗: " + error);
+          return false;
+        });
+      /*
       if (!sendLineMessages(lineMsg)) {
         window.alert("Line送信に失敗しました。");
         return false;
@@ -113,7 +131,9 @@ window.addEventListener("submit", function () {
         liff.closeWindow();
         return false;
       }
+    */
     }
+    return false;
   }
 });
 
