@@ -135,3 +135,5 @@ function insertUserInfo() {
   // GAS doPost
   fetch(URL, postparam);
 }
+
+
