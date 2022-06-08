@@ -34,29 +34,3 @@ function getLineProfile(_LINE_LIFF_ID) {
     });
 }
 
-// LINEメッセージテキスト送信
-function sendLineMessages(lineMsg) {
-  window.alert("liffId:" + LINE_LIFF_ID + "lineMsg:" + lineMsg);
-  if (!liff.isInClient()) {
-    window.alert("LINEトークが見つかりません。");
-    return false;
-  } else {
-    // liff処理
-    liff
-      .sendMessages([
-        {
-          type: "text",
-          text: "サンプル",
-//          text: JSON.stringify(lineMsg),
-        },
-      ])
-      .then(() => {
-        window.alert("LINEsendMessages成功:");
-        return true;
-      })
-      .catch((error) => {
-        window.alert("LINEsendMessages失敗: " + error);
-        return false;
-      });
-  }
-}
