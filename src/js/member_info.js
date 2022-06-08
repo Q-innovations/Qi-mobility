@@ -98,30 +98,13 @@ function onSubmit() {
       window.alert("ユーザー情報登録に失敗しました。");
       return false;
     } else {
+/*
       // Lineメッセージ登録
       var lineMsg =
         "会員情報登録しました！会員ID： " +
         document.getElementById("useridprofilefield").value;
       // Lineメッセージ送信
-      window.alert("ine送信lineMsgセット：" + lineMsg);
-      // liff処理
-      //          text: JSON.stringify(lineMsg),
-      liff
-        .sendMessages([
-          {
-            type: "text",
-            text: "サンプル",
-          },
-        ])
-        .then(() => {
-          window.alert("LINEsendMessages成功:");
-          return true;
-        })
-        .catch((error) => {
-          window.alert("LINEsendMessages失敗: " + error);
-          return false;
-        });
-      /*
+    */      
       if (!sendLineMessages(lineMsg)) {
         window.alert("Line送信に失敗しました。");
         return false;
@@ -131,7 +114,7 @@ function onSubmit() {
         liff.closeWindow();
         return true;
       }
-    */
+
       return false;
     }
     return false;
@@ -188,27 +171,21 @@ function insertUserInfo() {
 
 // LINEメッセージテキスト送信
 function sendLineMessages(lineMsg) {
-  window.alert("liffId:" + LINE_LIFF_ID + "lineMsg:" + lineMsg);
-  if (!liff.isInClient()) {
-    window.alert("LINEトークが見つかりません。");
-    return false;
-  } else {
-    // liff処理
-    liff
-      .sendMessages([
-        {
-          type: "text",
-          text: "サンプル",
-          //          text: JSON.stringify(lineMsg),
-        },
-      ])
-      .then(() => {
-        window.alert("LINEsendMessages成功:");
-        return true;
-      })
-      .catch((error) => {
-        window.alert("LINEsendMessages失敗: " + error);
-        return false;
-      });
-  }
+  window.alert("ine送信lineMsgセット：" + lineMsg);
+  // liff処理
+  liff
+    .sendMessages([
+      {
+        type: "text",
+        text: JSON.stringify(lineMsg),
+      },
+    ])
+    .then(() => {
+      window.alert("LINEsendMessages成功:");
+      return true;
+    })
+    .catch((error) => {
+      window.alert("LINEsendMessages失敗: " + error);
+      return false;
+    });
 }
