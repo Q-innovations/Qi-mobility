@@ -1,13 +1,9 @@
 // ロード時処理
 window.addEventListener("load", function () {
-  // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
-  var liffId = "1657149830-k11N9eMA";
-  getLineProfile(liffId);
-
-  // LINE起動チェック
-  //if (liff.isInClient()) {
-  if (!liff.isInClient()) {
+  const LINE_LIFF_ID = "1657149830-k11N9eMA";
+  // LINEプロフィール取得
+  if (!getLineProfile(LINE_LIFF_ID)) {
     window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -24,6 +20,41 @@ window.addEventListener("load", function () {
   }
 });
 
+// LINEプロフィール取得
+function getLineProfile(LINE_LIFF_ID) {
+  // liff処理
+  liff
+    .init({
+      liffId: LINE_LIFF_ID,
+    })
+    .then(() => {
+      // LINEプロフィール取得表示
+      //初期化
+      // https://developers.line.me/ja/reference/liff/#liffgetprofile()
+      liff
+        .getProfile()
+        .then(function (profile) {
+          // profile情報セット
+          document.getElementById("useridprofilefield").value = profile.userId;
+          document.getElementById("name").value = profile.displayName;
+          document.getElementById("displaynamefield").value =
+            profile.displayName;
+          // アラート出力
+          var nowDate = new Date();
+          var userId = profile.userId;
+          var displayName = profile.displayName;
+          var getLanguage = liff.getLanguage();
+          var isInClient = liff.isInClient();
+          var isLoggedIn = liff.isLoggedIn();
+          window.alert(nowDate + " " + userId + " " + displayName);
+          return true;
+        })
+        .catch(function (_error) {
+          return false;
+        });
+    });
+}
+
 // ユーザー情報取得
 function getGasUserinfo() {
   // GASでデプロイしたWebアプリケーションのURL
@@ -34,7 +65,6 @@ function getGasUserinfo() {
   let SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-//    tel: document.getElementById("tel").value,
   };
   let postparam = {
     method: "POST",
