@@ -36,7 +36,6 @@ function getLineProfile(LINE_LIFF_ID) {
         .then(function (profile) {
           // profile情報セット
           document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("name").value = profile.displayName;
           document.getElementById("displaynamefield").value =
             profile.displayName;
           // アラート出力
@@ -78,14 +77,8 @@ function getGasUserinfo() {
     /*成功した処理*/
     .then((data) => {
       //JSONから配列に変換
-      const object = data;
-      //inputタグそれぞれに取得したデータを設定
-      $("input").each(function (index, element) {
-        if (object[0][$(element).attr("name")]) {
-          $(element).val([object[0][$(element).attr("name")]]);
-        }
-      });
-      window.alert(data);
+      const objUserinfo = data;
+      window.alert(objUserinfo);
       /*
       //利用者selectタグ（子） の option値 を一旦削除
       $(".riyokana option").remove();
