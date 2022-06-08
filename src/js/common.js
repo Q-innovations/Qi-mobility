@@ -25,7 +25,7 @@ function getLineProfile(_LINE_LIFF_ID) {
           var getLanguage = liff.getLanguage();
           var isInClient = liff.isInClient();
           var isLoggedIn = liff.isLoggedIn();
-          alert(nowDate + " " + userId + " " + displayName);
+          window.alert(nowDate + " " + userId + " " + displayName);
           return true;
         })
         .catch(function (_error) {
@@ -36,7 +36,7 @@ function getLineProfile(_LINE_LIFF_ID) {
 
 // LINEメッセージテキスト送信
 function sendLineMessages(lineMsg) {
-  alert("liffId:" + LINE_LIFF_ID + "lineMsg:" + lineMsg);
+  window.alert("liffId:" + LINE_LIFF_ID + "lineMsg:" + lineMsg);
   if (!liff.isInClient()) {
     window.alert("LINEトークが見つかりません。");
     return false;

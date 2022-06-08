@@ -48,7 +48,7 @@ function getGasUserinfo() {
 }
 
 // リアルタイムバリデーションならない
-$('#name').on("change", function () {
+$("#name").on("change", function () {
   this.reportValidity();
 });
 $("#namekana").on("change", function () {
@@ -98,12 +98,12 @@ window.addEventListener("submit", function () {
       window.alert("ユーザー情報登録に失敗しました。");
       return false;
     } else {
-      window.alert("ユーザー情報登録に成功しました。");
       // Lineメッセージ登録
       var lineMsg =
         "会員情報登録しました！会員ID： " +
         document.getElementById("useridprofilefield").value;
-        // Lineメッセージ送信
+      // Lineメッセージ送信
+      window.alert("ine送信lineMsgセット：" + lineMsg);
       if (!sendLineMessages(lineMsg)) {
         window.alert("Line送信に失敗しました。");
         return false;
@@ -160,6 +160,6 @@ function insertUserInfo() {
     //    }
   };
   // GAS doPost
-  fetch(URL, postparam)
+  fetch(URL, postparam);
   return true;
 }
