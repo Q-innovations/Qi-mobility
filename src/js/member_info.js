@@ -20,7 +20,7 @@ function getGasUserinfo() {
   let SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
-    //    displaynamefield: document.getElementById("tel").value,
+    displaynamefield: document.getElementById("tel").value,
   };
   let postparam = {
     method: "POST",
@@ -68,28 +68,26 @@ window.addEventListener("submit", function () {
   //if (liff.isInClient()) { //PC確認時
   if (!liff.isInClient()) {
     window.alert("LINEから起動してください");
+
+    // Lineメッセージ登録
+    var lineMsg = "会員ID： " +
+    document.getElementById("useridprofilefield").value;
+
+    // Lineメッセージテキスト送信
+    sendLineMessages(lineMsg);
+
+
   } else {
     // UserInfoスプレッドシート登録
     insertUserInfo();
 
-    liff
-      .sendMessages([
-        {
-          type: "text",
-          text: JSON.stringify(
-            "会員情報登録しました！会員ID： " +
-              document.getElementById("useridprofilefield").value
-          ),
-        },
-      ])
-      .then(() => {
-        liff.closeWindow();
-      })
-      .catch((error) => {
-        window.alert("LINEsendMessages失敗: " + error);
-      });
+    // Lineメッセージ登録
+    var lineMsg = "会員情報登録しました！会員ID： " +
+    document.getElementById("useridprofilefield").value;
+
+    // Lineメッセージテキスト送信
+    sendLineMessages(lineMsg);
   }
-  return false;
 });
 
 // insertUserInfo
