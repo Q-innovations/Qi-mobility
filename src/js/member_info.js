@@ -1,11 +1,15 @@
 // ロード時処理
 window.addEventListener("load", function () {
-  // LINEプロフィール取得
   // LINE DevelopersのliffId★各自変更
   var liffId = "1657149830-O4YdRWr2";
-  getLineProfile(liffId);
-  // ユーザー情報取得
-  //getGasUserinfo();
+  // LINEプロフィール取得
+  if (!getLineProfile(liffId)) {
+    window.alert("LINEから起動してください");
+    return false;
+  } else {
+    // ユーザー情報取得
+    //getGasUserinfo();
+  }
 });
 
 // ユーザー情報取得
@@ -14,15 +18,15 @@ function getGasUserinfo() {
   // https://ryjkmr.com/gas-web-application-usual-way/
   //  let URL =
   //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-  let URL =
+  var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
 
-  let SendDATA = {
+  var SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
     displaynamefield: document.getElementById("tel").value,
   };
-  let postparam = {
+  var postparam = {
     method: "POST",
     mode: "no-cors",
     "Content-Type": "application/x-www-form-urlencoded",
@@ -43,6 +47,11 @@ function getGasUserinfo() {
       });
     });
 }
+
+// リアルタイムバリデーション
+$(".name").on("change", function () {
+  this.reportValidity();
+});
 
 // 代表者かな処理
 function onNamekana() {
@@ -66,27 +75,28 @@ function onAgree() {
 window.addEventListener("submit", function () {
   // LINE起動チェック
   //if (liff.isInClient()) { //PC確認時
-  if (!liff.isInClient()) {
+  if (liff.isInClient()) {
     window.alert("LINEから起動してください");
-
-    // Lineメッセージ登録
-    var lineMsg = "会員ID： " +
-    document.getElementById("useridprofilefield").value;
-
-    // Lineメッセージテキスト送信
-    sendLineMessages(lineMsg);
-
-
+    return false;
   } else {
-    // UserInfoスプレッドシート登録
-    insertUserInfo();
-
-    // Lineメッセージ登録
-    var lineMsg = "会員情報登録しました！会員ID： " +
-    document.getElementById("useridprofilefield").value;
-
-    // Lineメッセージテキスト送信
-    sendLineMessages(lineMsg);
+    //ユーザー情報登録
+    if (!insertUserInfo()) {
+      window.alert("ユーザー情報登録に失敗しました。");
+      return false;
+    } else {
+      // Lineメッセージ登録
+      var lineMsg =
+        "会員情報登録しました！会員ID： " +
+        document.getElementById("useridprofilefield").value;
+      if (!sendLineMessages()) {
+        window.alert("Line送信に失敗しました。");
+        return false;
+      } else {
+        // liffクローズ
+        window.alert("Line送信に成功しました。");
+        liff.closeWindow();
+      }
+    }
   }
 });
 
@@ -96,10 +106,10 @@ function insertUserInfo() {
   // https://ryjkmr.com/gas-web-application-usual-way/
   //  let URL =
   //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-  let URL =
+  var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
 
-  let SendDATA = {
+  var SendDATA = {
     action: "InsUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
     displaynamefield: document.getElementById("displaynamefield").value,
@@ -122,7 +132,7 @@ function insertUserInfo() {
     riyo6: document.getElementById("riyo6").value,
     bd6: document.getElementById("bd6").value,
   };
-  let postparam = {
+  var postparam = {
     method: "POST",
     mode: "no-cors",
     "Content-Type": "application/x-www-form-urlencoded",
@@ -133,7 +143,15 @@ function insertUserInfo() {
     //    }
   };
   // GAS doPost
-  fetch(URL, postparam);
+  //  fetch(URL, postparam);
+  let response = fetch(URL, postparam);
+
+  if (response.ok) { // HTTP ステータスが 200-299 の場合
+    // レスポンスの本文を取得
+    let json = await response.json();
+    return true;
+  } else {
+    alert("HTTP-Error: " + response.status);
+    return false;
+  }
 }
-
-

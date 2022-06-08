@@ -1,6 +1,6 @@
 // LINEプロフィール取得
 function getLineProfile(liffId) {
-  var liffId = "1657149830-O4YdRWr2";
+//  alert("liffId:" + liffId);
   // liff処理
   liff
     .init({
@@ -27,14 +27,10 @@ function getLineProfile(liffId) {
           var isLoggedIn = liff.isLoggedIn();
           console.log(nowDate + " " + userId + " " + displayName);
           alert(nowDate + " " + userId + " " + displayName);
+          return true;
         })
         .catch(function (error) {
-          console.log(
-            "LINEから起動してください:" +
-              document.getElementById("useridprofilefield").value +
-              document.getElementById("displaynamefield").value
-          );
-          alert("LINEから起動してください:" + liffId);
+          return false;
         });
     });
 }
@@ -72,12 +68,10 @@ function sendLineMessages(lineMsg) {
     ])
     .then(() => {
       window.alert("LINEsendMessages成功:");
-      liff.closeWindow();
-      return false;
+      return true;
     })
     .catch((error) => {
       window.alert("LINEsendMessages失敗: " + error);
       return false;
     });
-    return false;
 }
