@@ -146,9 +146,9 @@ function onSubmit() {
     return false;
   } else {
     //ユーザー情報削除
-    if (userinfoFlg) {
-      //      deleteUserInfo();
-    }
+    //if (userinfoFlg) {
+    //  deleteUserInfo();
+    //}
     //ユーザー情報登録
     if (!insertUserInfo()) {
       window.alert("ユーザー情報登録に失敗しました。");
