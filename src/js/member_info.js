@@ -2,12 +2,16 @@
 window.addEventListener("load", function () {
   // LINE DevelopersのliffId★各自変更
   const LINE_LIFF_ID = "1657149830-O4YdRWr2";
+  // ユーザ情報有無フラグ(true：データあり)
+  const userinfoFlg = false;
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
+    // ユーザー情報取得
+    //getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
-    //getGasUserinfo();
+    getGasUserinfo();
   }
 });
 
@@ -58,13 +62,15 @@ function getGasUserinfo() {
 
   var SendDATA = {
     action: "SelUserinfo",
-    useridprofilefield: document.getElementById("useridprofilefield").value,
-//    displaynamefield: document.getElementById("tel").value,
+    // useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
+        useridprofilefield: document.getElementById("useridprofilefield").value,
   };
   var postparam = {
+    //データを返却するときは以下の設定をはずす
+    //    mode: "no-cors",
+    //    "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
-    mode: "no-cors",
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
   // GAS doPost
@@ -73,14 +79,21 @@ function getGasUserinfo() {
     // 成功した処理
     .then((data) => {
       //JSONから配列に変換
-      var objUserinfo = data;
-      window.alert("objUserinfo:" + objUserinfo);
+      const objUserinfo = data;
       //inputタグそれぞれに取得したデータを設定
       $("input").each(function (index, element) {
         if (objUserinfo[0][$(element).attr("name")]) {
           $(element).val([objUserinfo[0][$(element).attr("name")]]);
         }
       });
+      //日付は個別設定(タイムゾーンの変更必要！！)
+      document.getElementById("bd1").value = objUserinfo[0].bd1.substr(0, 10);
+      document.getElementById("bd2").value = objUserinfo[0].bd2.substr(0, 10);
+      document.getElementById("bd3").value = objUserinfo[0].bd3.substr(0, 10);
+      document.getElementById("bd4").value = objUserinfo[0].bd4.substr(0, 10);
+      document.getElementById("bd5").value = objUserinfo[0].bd5.substr(0, 10);
+      document.getElementById("bd6").value = objUserinfo[0].bd6.substr(0, 10);
+
     });
 }
 
@@ -121,15 +134,20 @@ function onAgree() {
     document.getElementById("submitbtn").disabled = true;
   }
 }
+
 onSubmit;
 // 登録ボタン処理
 function onSubmit() {
   // LINE起動チェック
-  //if (liff.isInClient()) { //PC確認時
+  //if (liff.isInClient()) { //PCからテスト
   if (!liff.isInClient()) {
     window.alert("登録：LINEから起動してください");
     return false;
   } else {
+    //ユーザー情報削除
+    if (userinfoFlg) {
+//      deleteUserInfo();
+    }
     //ユーザー情報登録
     if (!insertUserInfo()) {
       window.alert("ユーザー情報登録に失敗しました。");
@@ -161,7 +179,31 @@ function onSubmit() {
   }
 }
 
-// insertUserInfo
+// ユーザー情報削除
+function deleteUserInfo() {
+  // GASでデプロイしたWebアプリケーションのURL
+  // https://ryjkmr.com/gas-web-application-usual-way/
+  //  let URL =
+  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+  var URL =
+    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
+
+  var SendDATA = {
+    action: "DelUserinfo",
+    useridprofilefield: document.getElementById("useridprofilefield").value,
+  };
+  var postparam = {
+    method: "POST",
+    mode: "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam);
+  return true;
+}
+
+// ユーザー情報登録
 function insertUserInfo() {
   // GASでデプロイしたWebアプリケーションのURL
   // https://ryjkmr.com/gas-web-application-usual-way/
