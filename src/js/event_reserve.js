@@ -99,10 +99,9 @@ function getGasUserinfo() {
       // ユーザID、LINE名、TEL
       document.getElementById("useridprofilefield").value =
         objUserinfo[0].useridprofilefield;
-        document.getElementById("displaynamefield").value =
+      document.getElementById("displaynamefield").value =
         objUserinfo[0].displaynamefield;
-        document.getElementById("tel").value =
-        objUserinfo[0].tel;
+      document.getElementById("tel").value = objUserinfo[0].tel;
       // 利用者かな
       for (let i = 1; i < 7; i++) {
         let element = document.getElementById("riyokana");
@@ -209,13 +208,15 @@ function onSubmit() {
     window.alert("LINEから起動してください");
   } else {
     // イベント予約登録
+    if (!document.getElementById("riyokana").value) {
+      window.alert("会員情報登録より利用者を登録してください。");
+      return false;
+    }
+    // イベント予約登録
     if (!insertEventReserve()) {
       window.alert("イベント予約登録に失敗しました。");
       return false;
     } else {
-      // PAYPAYAPI連携
-      // PAYPAYIDと詳細と金額を送信して支払い
-      // paymentPaypay();
       // Lineメッセージ登録
       var lineMsg =
         "イベント予約完了しました！PAYPAY(LINEPAY)からQRコードを読み取り、500円お支払いください。支払い確認のため支払い後のスクリーンショットをLINEへ送付ください。";
@@ -226,6 +227,13 @@ function onSubmit() {
             type: "text",
             text: JSON.stringify(lineMsg),
           },
+          /* https://developers.line.biz/ja/reference/messaging-api/#image-message
+          {
+            type: "image",
+            originalContentUrl: "https://example.com/original.jpg",
+            previewImageUrl: "https://example.com/preview.jpg",
+          },
+          */
         ])
         .then(() => {
           //window.alert("LINEsendMessages成功:");
@@ -236,9 +244,13 @@ function onSubmit() {
           window.alert("LINEsendMessages失敗: " + error);
           return false;
         });
-      return false;
+      // PAYPAYAPI連携
+      // PAYPAYIDと詳細と金額を送信して支払い
+      // paymentPaypay();
+      return true;
     }
   }
+  return true;
 }
 
 // イベント予約登録
