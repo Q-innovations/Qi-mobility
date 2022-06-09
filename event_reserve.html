@@ -29,8 +29,10 @@
             id="eplace1"
             onchange="onbEplace1();"
           >
+            <!--
             <option value="1">2022年06月26日(日)ＲＳ東櫛原</option>
             <option value="2">2022年11月XX日(土)＋ｙｏｕ</option>
+             -->
           </select>
         </div>
         <div class="table-responsive">
@@ -101,7 +103,7 @@
           name="displaynamefield"
           value="displaynamefield"
         />
-        <input type="hidden" id="tel" name="tel" value="09090768665" />
+        <input type="hidden" id="tel" name="tel" value="tel" />
         <!-- エリアはとりあえず福岡固定 -->
         <input type="hidden" id="erea" name="erea" value="福岡" />
         <div class="form-group">
@@ -111,10 +113,13 @@
             aria-label="会場"
             name="eplace2"
             id="eplace2"
+            required
             disabled
           >
+            <!--
             <option value="1">2022年06月26日(日)ＲＳ東櫛原</option>
             <option value="2">2022年11月XX日(土)＋ｙｏｕ</option>
+             -->
           </select>
         </div>
         <div class="form-group">
@@ -122,11 +127,10 @@
           <select
             class="form-select form-select-lg mb-3"
             aria-label="利用者かな"
+            id="riyokana"
             name="riyokana"
-          >
-            <option value="1">もび　たろう</option>
-            <option value="2">もび　はなこ</option>
-          </select>
+            required
+          ></select>
         </div>
         <div class="form-group">
           <label for="starttime">開始時刻</label>
@@ -135,6 +139,7 @@
             aria-label="開始時刻"
             name="starttime"
             id="starttime"
+            required
           >
             <option value="1300">13：00</option>
             <option value="1330">13：30</option>
@@ -153,6 +158,7 @@
             aria-label="機種"
             name="menu"
             id="menu"
+            required
           >
             <option value="Segway(ハンド)">Segway(ハンド)</option>
             <option value="Segway(フット)">Segway(フット)</option>
@@ -160,12 +166,11 @@
           </select>
         </div>
         <div class="form-group">
-          <!--                 <input type="submit" id="submit-btn" value="登録" class="btn btn-primary"> -->
           <input
             type="button"
             id="submit-btn"
             value="登録"
-            onclick="OnPost();"
+            onclick="return onSubmit();"
             class="btn btn-primary"
           />
         </div>
