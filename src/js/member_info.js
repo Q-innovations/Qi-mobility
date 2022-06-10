@@ -126,6 +126,13 @@ $("#adress2").on("change", function () {
   this.reportValidity();
 });
 
+// Datepicker
+$("#bd1").datepicker({
+  changeYear: true,
+  changeMonth: true,
+  duration: 300,
+});
+
 // 代表者かな処理
 function onNamekana() {
   // 利用者かな１と誕生日１をセット
