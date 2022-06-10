@@ -126,13 +126,6 @@ $("#adress2").on("change", function () {
   this.reportValidity();
 });
 
-// Datepicker
-$("#bd1").datepicker({
-  changeYear: true,
-  changeMonth: true,
-  duration: 300,
-});
-
 // 代表者かな処理
 function onNamekana() {
   // 利用者かな１と誕生日１をセット
@@ -173,7 +166,7 @@ function onSubmit() {
     } else {
       // Lineメッセージ登録
       var lineMsg =
-        "会員情報登録しました。会員ID： " +
+        "会員情報登録しました。\n会員ID： " +
         document.getElementById("useridprofilefield").value;
       // Lineメッセージ送信
       liff
