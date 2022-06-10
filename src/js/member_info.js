@@ -61,8 +61,8 @@ function getGasUserinfo() {
 
   var SendDATA = {
     action: "SelUserinfo",
-    // useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
     useridprofilefield: document.getElementById("useridprofilefield").value,
+    //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
   var postparam = {
     //データを返却するときは以下の設定をはずす
@@ -80,22 +80,24 @@ function getGasUserinfo() {
       // JSONから配列に変換
       const objUserinfo = data;
       // ユーザ情報有無フラグ(true：データあり)
-      if (objUserinfo.length !== 0) {
+      if (objUserinfo.length === 0) {
+        userinfoFlg = false;
+      } else {
         userinfoFlg = true;
+        // inputタグそれぞれに取得したデータを設定
+        $("input").each(function (index, element) {
+          if (objUserinfo[0][$(element).attr("name")]) {
+            $(element).val([objUserinfo[0][$(element).attr("name")]]);
+          }
+        });
+        // 日付は個別設定(タイムゾーンの変更必要！！)
+        document.getElementById("bd1").value = objUserinfo[0].bd1.substr(0, 10);
+        document.getElementById("bd2").value = objUserinfo[0].bd2.substr(0, 10);
+        document.getElementById("bd3").value = objUserinfo[0].bd3.substr(0, 10);
+        document.getElementById("bd4").value = objUserinfo[0].bd4.substr(0, 10);
+        document.getElementById("bd5").value = objUserinfo[0].bd5.substr(0, 10);
+        document.getElementById("bd6").value = objUserinfo[0].bd6.substr(0, 10);
       }
-      // inputタグそれぞれに取得したデータを設定
-      $("input").each(function (index, element) {
-        if (objUserinfo[0][$(element).attr("name")]) {
-          $(element).val([objUserinfo[0][$(element).attr("name")]]);
-        }
-      });
-      // 日付は個別設定(タイムゾーンの変更必要！！)
-      document.getElementById("bd1").value = objUserinfo[0].bd1.substr(0, 10);
-      document.getElementById("bd2").value = objUserinfo[0].bd2.substr(0, 10);
-      document.getElementById("bd3").value = objUserinfo[0].bd3.substr(0, 10);
-      document.getElementById("bd4").value = objUserinfo[0].bd4.substr(0, 10);
-      document.getElementById("bd5").value = objUserinfo[0].bd5.substr(0, 10);
-      document.getElementById("bd6").value = objUserinfo[0].bd6.substr(0, 10);
     });
 }
 
@@ -147,7 +149,7 @@ function onSubmit() {
   } else {
     //ユーザー情報削除
     if (userinfoFlg) {
-      //      deleteUserInfo();
+      deleteUserInfo();
     }
     //ユーザー情報登録
     if (!insertUserInfo()) {
@@ -175,7 +177,6 @@ function onSubmit() {
           window.alert("LINEsendMessages失敗: " + error);
           return false;
         });
-      return false;
     }
   }
 }
