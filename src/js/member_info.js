@@ -180,7 +180,7 @@ function onSubmit() {
           window.alert("LINEsendMessages失敗: " + error);
           return false;
         });
-      return true;
+      return false;
     }
   }
 }
