@@ -251,10 +251,10 @@ function onSubmit() {
       // PAYPAYAPI連携
       // PAYPAYIDと詳細と金額を送信して支払い
       // paymentPaypay();
-      return true;
+      return false;
     }
   }
-  return true;
+  return false;
 }
 
 // イベント予約登録
