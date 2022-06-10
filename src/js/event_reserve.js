@@ -43,7 +43,6 @@ function getLineProfile(LINE_LIFF_ID) {
         .then(function (profile) {
           // profile情報セット
           document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("name").value = profile.displayName;
           document.getElementById("displaynamefield").value =
             profile.displayName;
           // アラート出力
@@ -53,11 +52,11 @@ function getLineProfile(LINE_LIFF_ID) {
           var getLanguage = liff.getLanguage();
           var isInClient = liff.isInClient();
           var isLoggedIn = liff.isLoggedIn();
-          //window.alert("liffＯＫ" + userId + " " + displayName);
+          window.alert("liff" + userId + " " + displayName);
           return true;
         })
         .catch(function (_error) {
-          window.alert("LINEから起動してください");
+          window.alert("LINEから起動してください。");
           return false;
         });
     });
@@ -198,7 +197,7 @@ function getGasEventReserveView() {
 }
 
 // イベント会場1処理
-function onbEplace1() {
+function onEplace1() {
   // 予約残数取得
   getGasEventReserveView();
 
@@ -212,7 +211,7 @@ function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
   if (!liff.isInClient()) {
-    window.alert("LINEから起動してください");
+    window.alert("LINEから起動してください。");
   } else {
     // イベント予約登録
     if (!document.getElementById("riyokana").value) {
@@ -226,7 +225,7 @@ function onSubmit() {
     } else {
       // Lineメッセージ登録
       var lineMsg1 =
-        "イベント予約完了しました！　会場：" +
+        "イベント予約完了しました。　会場：" +
         document.getElementById("eplace1").value +
         "　利用者：" +
         document.getElementById("riyokana").value +

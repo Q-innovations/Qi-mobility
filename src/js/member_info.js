@@ -44,7 +44,7 @@ function getLineProfile(LINE_LIFF_ID) {
           return true;
         })
         .catch(function (_error) {
-          window.alert("LINEから起動してください");
+          window.alert("LINEから起動してください。");
           return false;
         });
     });
@@ -157,7 +157,7 @@ function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
   if (!liff.isInClient()) {
-    window.alert("登録：LINEから起動してください");
+    window.alert("LINEから起動してください。");
     return false;
   } else {
     //ユーザー情報削除
@@ -174,7 +174,7 @@ function onSubmit() {
     } else {
       // Lineメッセージ登録
       var lineMsg =
-        "会員情報登録しました！会員ID： " +
+        "会員情報登録しました。会員ID： " +
         document.getElementById("useridprofilefield").value;
       // Lineメッセージ送信
       liff
