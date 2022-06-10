@@ -45,14 +45,6 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-          // アラート出力
-          var nowDate = new Date();
-          var userId = profile.userId;
-          var displayName = profile.displayName;
-          var getLanguage = liff.getLanguage();
-          var isInClient = liff.isInClient();
-          var isLoggedIn = liff.isLoggedIn();
-          window.alert("liff" + userId + " " + displayName);
           return true;
         })
         .catch(function (_error) {
