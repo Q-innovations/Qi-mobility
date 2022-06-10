@@ -7,8 +7,8 @@ window.addEventListener("load", function () {
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
-    //getGasUserinfo(); //PCからテスト
-    getGasEventinfo();
+    getGasUserinfo(); //PCからテスト
+    getGasEventinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -74,8 +74,8 @@ function getGasUserinfo() {
 
   var SendDATA = {
     action: "SelUserinfo",
-    //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
     useridprofilefield: document.getElementById("useridprofilefield").value,
+    //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
   var postparam = {
     // データを返却するときは以下の設定をはずす
@@ -128,6 +128,9 @@ function getGasEventinfo() {
     erea: document.getElementById("erea").value,
   };
   let postparam = {
+    // データを返却するときは以下の設定をはずす
+    // mode: "no-cors",
+    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
@@ -222,14 +225,27 @@ function onSubmit() {
       return false;
     } else {
       // Lineメッセージ登録
-      var lineMsg =
-        "イベント予約完了しました！PAYPAY(LINEPAY)からQRコードを読み取り、500円お支払いください。支払い確認のため支払い後のスクリーンショットをLINEへ送付ください。";
+      var lineMsg1 =
+        "イベント予約完了しました！　会場：" +
+        document.getElementById("eplace1").value +
+        "　利用者：" +
+        document.getElementById("riyokana").value +
+        "　開始時刻：" +
+        document.getElementById("starttime").value +
+        "　機種：" +
+        document.getElementById("menu").value;
+      var lineMsg2 =
+        "PAYPAY(LINEPAY)から以下のQRコードを読み取り、500円お支払いください。支払い確認のため支払い後のスクリーンショットをLINEへ送付ください。";
       // Lineメッセージ送信
       liff
         .sendMessages([
           {
             type: "text",
-            text: JSON.stringify(lineMsg),
+            text: JSON.stringify(lineMsg1),
+          },
+          {
+            type: "text",
+            text: JSON.stringify(lineMsg2),
           },
           /* https://developers.line.biz/ja/reference/messaging-api/#image-message
           {
@@ -253,6 +269,7 @@ function onSubmit() {
       // paymentPaypay();
       return false;
     }
+    return false;
   }
   return false;
 }
@@ -283,4 +300,5 @@ function insertEventReserve() {
   };
   // GAS doPost
   fetch(URL, postparam);
+  return true;
 }
