@@ -7,7 +7,7 @@ window.addEventListener("load", function () {
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
-    getGasUserinfo(); //PCからテスト
+    //getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -19,13 +19,12 @@ window.addEventListener("load", function () {
 function getLineProfile(LINE_LIFF_ID) {
   // liff処理
   liff
+    //初期化
     .init({
       liffId: LINE_LIFF_ID,
     })
     .then(() => {
-      // LINEプロフィール取得表示
-      //初期化
-      // https://developers.line.me/ja/reference/liff/#liffgetprofile()
+      // LINEプロフィール取得
       liff
         .getProfile()
         .then(function (profile) {
@@ -44,22 +43,17 @@ function getLineProfile(LINE_LIFF_ID) {
 
 // ユーザー情報取得
 function getGasUserinfo() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
-  //  let URL =
-  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
-
+  // GAS送信データ
   var SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
     //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
+  // postparam固定
   var postparam = {
-    //データを返却するときは以下の設定をはずす
-    // mode: "no-cors",
-    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
@@ -95,13 +89,6 @@ function getGasUserinfo() {
         document.getElementById("bd5").value = objUserinfo[0].bd5.substr(0, 10);
         document.getElementById("riyo6").value = objUserinfo[0].riyo6;
         document.getElementById("bd6").value = objUserinfo[0].bd6.substr(0, 10);
-        /*
-        $("input").each(function (index, element) {
-          if (objUserinfo[0][$(element).attr("name")]) {
-            $(element).val([objUserinfo[0][$(element).attr("name")]]);
-          }
-        });
-        */
       }
     });
 }
@@ -166,19 +153,19 @@ function onSubmit() {
     } else {
       // Lineメッセージ登録
       var lineMsg =
-        "会員情報登録しました。\n会員ID： " +
-        document.getElementById("useridprofilefield").value;
+        "会員登録しました。\n会員ID： " +
+        document.getElementById("useridprofilefield").value +
+        "\n会員名： " +
+        document.getElementById("name").value;
       // Lineメッセージ送信
       liff
         .sendMessages([
           {
             type: "text",
-//            text: JSON.stringify(lineMsg),
             text: lineMsg,
           },
         ])
         .then(() => {
-          //window.alert("LINEsendMessages成功:");
           liff.closeWindow();
           return true;
         })
@@ -195,21 +182,16 @@ function onSubmit() {
 
 // ユーザー情報削除
 function deleteUserInfo() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
-  //  let URL =
-  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
-
+  // GAS送信データ
   var SendDATA = {
     action: "DelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
   };
+  // postparam固定
   var postparam = {
-    //データを返却するときは以下の設定をはずす
-    // mode: "no-cors",
-    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
@@ -221,13 +203,10 @@ function deleteUserInfo() {
 
 // ユーザー情報登録
 function insertUserInfo() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
-  //  let URL =
-  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
-
+  // GAS送信データ
   var SendDATA = {
     action: "InsUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
@@ -251,10 +230,8 @@ function insertUserInfo() {
     riyo6: document.getElementById("riyo6").value,
     bd6: document.getElementById("bd6").value,
   };
+  // postparam固定
   var postparam = {
-    //データを返却するときは以下の設定をはずす
-    // mode: "no-cors",
-    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),

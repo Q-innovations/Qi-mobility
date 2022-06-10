@@ -7,9 +7,8 @@ window.addEventListener("load", function () {
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
-    getGasUserinfo(); //PCからテスト
-    getGasEventinfo(); //PCからテスト
-    //window.alert("LINEから起動してください");
+    //getGasUserinfo(); //PCからテスト
+    //getGasEventinfo(); //PCからテスト
   } else {
     // ユーザー情報取得
     getGasUserinfo();
@@ -17,12 +16,7 @@ window.addEventListener("load", function () {
     getGasEventinfo();
     // 予約残数取得
     getGasEventReserveView();
-
-    // 利用者が設定されていれば続行、なければ利用者登録アラートしてclose
-    // window.alert('利用者登録後に予約お願いします。');
-    // liff.closeWindow(); or return false;
-
-    // 機器取得
+    // 機器取得(拡張用)
     // getGasEventmenu();
   }
 });
@@ -31,13 +25,12 @@ window.addEventListener("load", function () {
 function getLineProfile(LINE_LIFF_ID) {
   // liff処理
   liff
+    //初期化
     .init({
       liffId: LINE_LIFF_ID,
     })
     .then(() => {
-      // LINEプロフィール取得表示
-      //初期化
-      // https://developers.line.me/ja/reference/liff/#liffgetprofile()
+      // LINEプロフィール取得
       liff
         .getProfile()
         .then(function (profile) {
@@ -56,22 +49,17 @@ function getLineProfile(LINE_LIFF_ID) {
 
 // ユーザー情報取得
 function getGasUserinfo() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
-  //  let URL =
-  //    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
-
+  // GAS送信データ
   var SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
     //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
+  // postparam固定
   var postparam = {
-    // データを返却するときは以下の設定をはずす
-    // mode: "no-cors",
-    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
@@ -109,19 +97,16 @@ function getGasUserinfo() {
 
 // イベント情報取得
 function getGasEventinfo() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   let URL =
     "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-
+  // GAS送信データ
   let SendDATA = {
     action: "SelEvent",
     erea: document.getElementById("erea").value,
   };
+  // postparam固定
   let postparam = {
-    // データを返却するときは以下の設定をはずす
-    // mode: "no-cors",
-    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
@@ -151,20 +136,19 @@ function getGasEventinfo() {
 
 // 予約残数取得
 function getGasEventReserveView() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   let URL =
     "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-
+  // GAS送信データ
   let SendDATA = {
     action: "SelEventReserve",
     erea: document.getElementById("erea").value,
     erea: document.getElementById("eplace1").value,
   };
+  // postparam固定
   let postparam = {
     method: "POST",
-    mode: "no-cors",
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
   // GAS doPost
@@ -205,7 +189,7 @@ function onSubmit() {
   if (!liff.isInClient()) {
     window.alert("LINEから起動してください。");
   } else {
-    // イベント予約登録
+    // 利用者登録チェック
     if (!document.getElementById("riyokana").value) {
       window.alert("会員情報登録より利用者を登録してください。");
       return false;
@@ -225,18 +209,22 @@ function onSubmit() {
         document.getElementById("starttime").value +
         "\n機種：" +
         document.getElementById("menu").value;
-      var lineMsg2 =
-        "PAYPAY(LINEPAY)から以下のQRコードを読み取り、500円お支払いください。\n支払い確認のため支払い後のスクリーンショットをLINEへ送付ください。";
+        var lineMsg2 =
+        "PAYPAY(LINEPAY)から以下のQRコードを読み取り、500円お支払いください。";
+        var lineMsg3 =
+        "お支払い確認のため支払いIDが記載されているスクリーンショットをLINEへ送付ください。";
+        var lineMsg4 =
+        "現地でのQRコード支払い、現金での支払いは釣銭のなきようお願いいたします。";
       // Lineメッセージ送信
       liff
         .sendMessages([
           {
             type: "text",
-            text: JSON.stringify(lineMsg1),
+            text: lineMsg1,
           },
           {
             type: "text",
-            text: JSON.stringify(lineMsg2),
+            text: lineMsg2,
           },
           /* https://developers.line.biz/ja/reference/messaging-api/#image-message
           {
@@ -245,9 +233,12 @@ function onSubmit() {
             previewImageUrl: "https://example.com/preview.jpg",
           },
           */
+          {
+            type: "text",
+            text: lineMsg3,
+          },
         ])
         .then(() => {
-          //window.alert("LINEsendMessages成功:");
           liff.closeWindow();
           return true;
         })
@@ -267,11 +258,10 @@ function onSubmit() {
 
 // イベント予約登録
 function insertEventReserve() {
-  // GASでデプロイしたWebアプリケーションのURL
-  // https://ryjkmr.com/gas-web-application-usual-way/
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
   let URL =
     "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
-
+  // GAS送信データ
   let SendDATA = {
     action: "InsEventReserve",
     useridprofilefield: document.getElementById("useridprofilefield").value,
@@ -283,10 +273,10 @@ function insertEventReserve() {
     starttime: document.getElementById("starttime").value,
     menu: document.getElementById("menu").value,
   };
+  // postparam固定
   let postparam = {
     method: "POST",
-    mode: "no-cors",
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
   // GAS doPost
