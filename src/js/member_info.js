@@ -206,9 +206,11 @@ function deleteUserInfo() {
     useridprofilefield: document.getElementById("useridprofilefield").value,
   };
   var postparam = {
+    //データを返却するときは以下の設定をはずす
+    // mode: "no-cors",
+    // "Content-Type": "application/x-www-form-urlencoded",
     method: "POST",
-    mode: "no-cors",
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
   // GAS doPost
