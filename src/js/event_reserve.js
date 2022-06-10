@@ -8,6 +8,7 @@ window.addEventListener("load", function () {
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
     //getGasUserinfo(); //PCからテスト
+    getGasEventinfo();
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -142,11 +143,14 @@ function getGasEventinfo() {
       for (var i = 0; i < objEvent.length; i++) {
         let element1 = document.getElementById("eplace1");
         let element2 = document.getElementById("eplace2");
-        let options = document.createElement("option");
-        options.value = objEvent[i].eplace;
-        options.text = objEvent[i].eplace;
-        element1.appendChild(options);
-        element2.appendChild(options);
+        let options1 = document.createElement("option");
+        let options2 = document.createElement("option");
+        options1.value = objEvent[i].eplace;
+        options1.text = objEvent[i].eplace;
+        options2.value = objEvent[i].eplace;
+        options2.text = objEvent[i].eplace;
+        element1.appendChild(options1);
+        element2.appendChild(options2);
       }
     });
 }
