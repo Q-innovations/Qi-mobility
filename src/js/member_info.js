@@ -7,7 +7,7 @@ window.addEventListener("load", function () {
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
-    //getGasUserinfo(); //PCからテスト
+    getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -78,17 +78,17 @@ function getGasUserinfo() {
         document.getElementById("adress1").value = objUserinfo[0].adress1;
         document.getElementById("adress2").value = objUserinfo[0].adress2;
         document.getElementById("riyo1").value = objUserinfo[0].riyo1;
-        document.getElementById("bd1").value = objUserinfo[0].bd1.substr(0, 10);
+        document.getElementById("bd1").value = objUserinfo[0].bd1;
         document.getElementById("riyo2").value = objUserinfo[0].riyo2;
-        document.getElementById("bd2").value = objUserinfo[0].bd2.substr(0, 10);
+        document.getElementById("bd2").value = objUserinfo[0].bd2;
         document.getElementById("riyo3").value = objUserinfo[0].riyo3;
-        document.getElementById("bd3").value = objUserinfo[0].bd3.substr(0, 10);
+        document.getElementById("bd3").value = objUserinfo[0].bd3;
         document.getElementById("riyo4").value = objUserinfo[0].riyo4;
-        document.getElementById("bd4").value = objUserinfo[0].bd4.substr(0, 10);
+        document.getElementById("bd4").value = objUserinfo[0].bd4;
         document.getElementById("riyo5").value = objUserinfo[0].riyo5;
-        document.getElementById("bd5").value = objUserinfo[0].bd5.substr(0, 10);
+        document.getElementById("bd5").value = objUserinfo[0].bd5;
         document.getElementById("riyo6").value = objUserinfo[0].riyo6;
-        document.getElementById("bd6").value = objUserinfo[0].bd6.substr(0, 10);
+        document.getElementById("bd6").value = objUserinfo[0].bd6;
       }
     });
 }
@@ -189,11 +189,14 @@ function deleteUserInfo() {
   var SendDATA = {
     action: "DelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
+    //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
   // postparam固定
   var postparam = {
+    "mode": "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    //"Content-Type": "application/json",
     method: "POST",
-    "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
   // GAS doPost
