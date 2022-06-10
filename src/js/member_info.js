@@ -149,7 +149,10 @@ function onSubmit() {
   } else {
     //ユーザー情報削除
     if (userinfoFlg) {
-      deleteUserInfo();
+      if (!deleteUserInfo()) {
+        window.alert("ユーザー情報削除に失敗しました。");
+        return false;
+      }
     }
     //ユーザー情報登録
     if (!insertUserInfo()) {
@@ -177,6 +180,7 @@ function onSubmit() {
           window.alert("LINEsendMessages失敗: " + error);
           return false;
         });
+      return true;
     }
   }
 }
