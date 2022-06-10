@@ -7,7 +7,7 @@ window.addEventListener("load", function () {
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
-    getGasUserinfo(); //PCからテスト
+    //getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
