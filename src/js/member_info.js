@@ -156,7 +156,7 @@ function onAgree() {
 function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
-  if (liff.isInClient()) {
+  if (!liff.isInClient()) {
     window.alert("登録：LINEから起動してください");
     return false;
   } else {
@@ -195,7 +195,9 @@ function onSubmit() {
         });
       return false;
     }
+    return false;
   }
+  return false;
 }
 
 // ユーザー情報削除
