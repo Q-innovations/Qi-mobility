@@ -217,16 +217,16 @@ function onSubmit() {
     } else {
       // Lineメッセージ登録
       var lineMsg1 =
-        "イベント予約完了しました。　会場：" +
+        "イベント予約完了しました。\n会場：" +
         document.getElementById("eplace1").value +
-        "　利用者：" +
+        "\n利用者：" +
         document.getElementById("riyokana").value +
-        "　開始時刻：" +
+        "\n開始時刻：" +
         document.getElementById("starttime").value +
-        "　機種：" +
+        "\n機種：" +
         document.getElementById("menu").value;
       var lineMsg2 =
-        "PAYPAY(LINEPAY)から以下のQRコードを読み取り、500円お支払いください。支払い確認のため支払い後のスクリーンショットをLINEへ送付ください。";
+        "PAYPAY(LINEPAY)から以下のQRコードを読み取り、500円お支払いください。\n支払い確認のため支払い後のスクリーンショットをLINEへ送付ください。";
       // Lineメッセージ送信
       liff
         .sendMessages([

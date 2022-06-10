@@ -173,7 +173,8 @@ function onSubmit() {
         .sendMessages([
           {
             type: "text",
-            text: JSON.stringify(lineMsg),
+//            text: JSON.stringify(lineMsg),
+            text: lineMsg,
           },
         ])
         .then(() => {
