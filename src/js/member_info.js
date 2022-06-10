@@ -148,15 +148,9 @@ function onSubmit() {
     return false;
   } else {
     //ユーザー情報削除
-<<<<<<< HEAD
     if (userinfoFlg) {
       deleteUserInfo();
     }
-=======
-    //if (userinfoFlg) {
-    //  deleteUserInfo();
-    //}
->>>>>>> 641909e9842d9fecd4c19508b19cfbf765038409
     //ユーザー情報登録
     if (!insertUserInfo()) {
       window.alert("ユーザー情報登録に失敗しました。");
