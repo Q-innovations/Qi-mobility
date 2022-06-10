@@ -1,5 +1,5 @@
 // ロード時処理
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
   // LINE DevelopersのliffId★各自変更
   const LINE_LIFF_ID = "1657149830-O4YdRWr2";
   // ユーザ情報有無フラグ(true：データあり)
@@ -32,7 +32,8 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-          return true;
+            window.alert(profile.userId);
+            return true;
         })
         .catch(function (_error) {
           window.alert("LINEから起動してください。");
@@ -47,6 +48,7 @@ function getGasUserinfo() {
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
+  window.alert(document.getElementById("useridprofilefield").value);
   var SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
@@ -58,6 +60,7 @@ function getGasUserinfo() {
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
+  window.alert(document.getElementById("useridprofilefield").value);
   // GAS doPost
   fetch(URL, postparam)
     .then((response) => response.json())
@@ -139,6 +142,7 @@ function onSubmit() {
     window.alert("LINEから起動してください。");
     return false;
   } else {
+    window.alert(document.getElementById("useridprofilefield").value);
     //ユーザー情報削除
     if (userinfoFlg) {
       if (!deleteUserInfo()) {

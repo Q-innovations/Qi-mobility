@@ -1,5 +1,5 @@
 // ロード時処理
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
   // LINE DevelopersのliffId★各自変更
   const LINE_LIFF_ID = "1657149830-k11N9eMA";
   // ユーザ情報有無フラグ(true：データあり)
