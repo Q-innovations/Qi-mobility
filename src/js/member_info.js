@@ -16,11 +16,10 @@ window.addEventListener("DOMContentLoaded", function () {
       liff
         .getProfile()
         .then(function (profile) {
-          // profile情報セット
-          document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("displaynamefield").value =
-            profile.displayName;
+          // UIDセット
           UID = profile.userId;
+          // ユーザー情報取得
+          getGasUserinfo(UID);
         })
         .catch(function (_error) {
           window.alert("LINEから起動してください。");
@@ -68,6 +67,8 @@ function getGasUserinfo(UID) {
       } else {
         userinfoFlg = true;
         // inputタグそれぞれに取得したデータを設定
+        document.getElementById("useridprofilefield").value = objUserinfo[0].useridprofilefield;
+        document.getElementById("displaynamefield").value = objUserinfo[0].displaynamefield;
         document.getElementById("name").value = objUserinfo[0].name;
         document.getElementById("namekana").value = objUserinfo[0].namekana;
         document.getElementById("tel").value = objUserinfo[0].tel;

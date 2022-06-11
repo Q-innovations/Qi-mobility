@@ -16,11 +16,16 @@ window.addEventListener("DOMContentLoaded", function () {
       liff
         .getProfile()
         .then(function (profile) {
-          // profile情報セット
-          document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("displaynamefield").value =
-            profile.displayName;
+          // UIDセット
           UID = profile.userId;
+          // ユーザー情報取得
+          getGasUserinfo(UID);
+          // イベント情報取得
+          getGasEventinfo();
+          // 予約残数取得
+          getGasEventReserveView();
+          // 機器取得(拡張用)
+          // getGasEventmenu();
         })
         .catch(function (_error) {
           window.alert("LINEから起動してください。");
@@ -35,15 +40,6 @@ window.addEventListener("DOMContentLoaded", function () {
     getGasUserinfo(UID);
     getGasEventinfo();
     getGasEventReserveView();
-  } else {
-    // ユーザー情報取得
-    getGasUserinfo(UID);
-    // イベント情報取得
-    getGasEventinfo();
-    // 予約残数取得
-    getGasEventReserveView();
-    // 機器取得(拡張用)
-    // getGasEventmenu();
   }
 });
 
