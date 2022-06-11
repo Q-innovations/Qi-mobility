@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", function () {
   // LINEプロフィール取得
   if (!getLineProfile(LINE_LIFF_ID)) {
     // ユーザー情報取得
-    //getGasUserinfo(); //PCからテスト
+    getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
     // ユーザー情報取得
@@ -32,7 +32,8 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-            window.alert(profile.userId);
+            window.alert("UID:" + profile.userId);
+            window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
             return true;
         })
         .catch(function (_error) {
@@ -48,7 +49,6 @@ function getGasUserinfo() {
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
-  window.alert(document.getElementById("useridprofilefield").value);
   var SendDATA = {
     action: "SelUserinfo",
     useridprofilefield: document.getElementById("useridprofilefield").value,
@@ -60,7 +60,6 @@ function getGasUserinfo() {
     "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
-  window.alert(document.getElementById("useridprofilefield").value);
   // GAS doPost
   fetch(URL, postparam)
     .then((response) => response.json())
@@ -138,11 +137,10 @@ function onAgree() {
 function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
-  if (!liff.isInClient()) {
+  if (liff.isInClient()) {
     window.alert("LINEから起動してください。");
     return false;
   } else {
-    window.alert(document.getElementById("useridprofilefield").value);
     //ユーザー情報削除
     if (userinfoFlg) {
       if (!deleteUserInfo()) {
