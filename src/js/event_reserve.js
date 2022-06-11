@@ -147,7 +147,7 @@ function getGasEventReserveView() {
   // GAS送信データ
   let SendDATA = {
     action: "SelEventReserve",
-//    erea: document.getElementById("erea").value,
+    erea: "福岡",
 //    eplace: document.getElementById("eplace1").value,
   };
   // postparam固定
@@ -162,16 +162,16 @@ function getGasEventReserveView() {
     /*成功した処理*/
     .then((data) => {
       //JSONから配列に変換
-      const object = data;
+      const objEventReserve = data;
       //状況(予約可：〇、残りわずか：△、予約不可：×)
-      document.getElementById("13：00").textContent = objEvent[1].eplace;
-      document.getElementById("13：30").textContent = objEvent[2].eplace;
-      document.getElementById("14：00").textContent = objEvent[3].eplace;
-      document.getElementById("14：30").textContent = objEvent[4].eplace;
-      document.getElementById("15：00").textContent = objEvent[5].eplace;
-      document.getElementById("15：30").textContent = objEvent[6].eplace;
-      document.getElementById("16：00").textContent = objEvent[7].eplace;
-      document.getElementById("16：30").textContent = objEvent[8].eplace;
+      document.getElementById("1300").textContent = objEventReserve[1].状況;
+      document.getElementById("1330").textContent = objEventReserve[2].状況;
+      document.getElementById("1400").textContent = objEventReserve[3].状況;
+      document.getElementById("1430").textContent = objEventReserve[4].状況;
+      document.getElementById("1500").textContent = objEventReserve[5].状況;
+      document.getElementById("1530").textContent = objEventReserve[6].状況;
+      document.getElementById("1600").textContent = objEventReserve[7].状況;
+      document.getElementById("1630").textContent = objEventReserve[8].状況;
     });
 }
 
