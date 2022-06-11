@@ -221,13 +221,11 @@ function onSubmit() {
             type: "text",
             text: lineMsg2,
           },
-          /* https://developers.line.biz/ja/reference/messaging-api/#image-message
           {
             type: "image",
-            originalContentUrl: "https://example.com/original.jpg",
-            previewImageUrl: "https://example.com/preview.jpg",
+            originalContentUrl: "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
+            previewImageUrl: "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
           },
-          */
           {
             type: "text",
             text: lineMsg3,
