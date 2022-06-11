@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", function () {
     getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
+    window.alert("UID:" + profile.userId);
     // ユーザー情報取得
     getGasUserinfo();
   }
@@ -32,7 +33,6 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-            window.alert("UID:" + profile.userId);
             window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
             return true;
         })
@@ -51,7 +51,7 @@ function getGasUserinfo() {
   // GAS送信データ
   var SendDATA = {
     action: "SelUserinfo",
-    useridprofilefield: document.getElementById("useridprofilefield").value,
+    useridprofilefield: profile.userId,
     //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
   // postparam固定
