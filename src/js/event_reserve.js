@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const userinfoFlg = false;
   // LINEプロフィール取得
   var UID = getLineProfile(LINE_LIFF_ID);
-  // LINEプロフィール取得
+  // ユーザー情報取得取得
   if (!UID) {
     // ユーザー情報取得  //PCからテスト
     UID = "U91f9611376221676612af6c1d690a8a5";
@@ -163,17 +163,15 @@ function getGasEventReserveView() {
     .then((data) => {
       //JSONから配列に変換
       const object = data;
-      //残数値 を変換　残りわずかなど
-
-      //残数値 を更新
-      //document.getElementById("1300").textContent = object.XXX
-      //document.getElementById("1330").textContent = object.XXX
-      //document.getElementById("1400").textContent = object.XXX
-      //document.getElementById("1430").textContent = object.XXX
-      //document.getElementById("1500").textContent = object.XXX
-      //document.getElementById("1530").textContent = object.XXX
-      //document.getElementById("1600").textContent = object.XXX
-      //document.getElementById("1630").textContent = object.XXX
+      //状況(予約可：〇、残りわずか：△、予約不可：×)
+      document.getElementById("13：00").textContent = objEvent[1].eplace;
+      document.getElementById("13：30").textContent = objEvent[2].eplace;
+      document.getElementById("14：00").textContent = objEvent[3].eplace;
+      document.getElementById("14：30").textContent = objEvent[4].eplace;
+      document.getElementById("15：00").textContent = objEvent[5].eplace;
+      document.getElementById("15：30").textContent = objEvent[6].eplace;
+      document.getElementById("16：00").textContent = objEvent[7].eplace;
+      document.getElementById("16：30").textContent = objEvent[8].eplace;
     });
 }
 
@@ -191,7 +189,7 @@ function onEplace1() {
 function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
-  if (liff.isInClient()) {
+  if (!liff.isInClient()) {
     window.alert("LINEから起動してください。");
   } else {
     // 利用者登録チェック

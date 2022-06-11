@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const userinfoFlg = false;
   // LINEプロフィール取得
   var UID = getLineProfile(LINE_LIFF_ID);
-  // LINEプロフィール取得
+  // ユーザー情報取得取得
   if (!UID) {
     // ユーザー情報取得  //PCからテスト
     UID = "U91f9611376221676612af6c1d690a8a5";
@@ -139,7 +139,7 @@ function onAgree() {
 function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
-  if (liff.isInClient()) {
+  if (!liff.isInClient()) {
     window.alert("LINEから起動してください。");
     return false;
   } else {
