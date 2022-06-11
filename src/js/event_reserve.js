@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("useridprofilefield").value = UID;
     getGasUserinfo(UID);
     getGasEventinfo();
-    //getGasEventReserveView();
+    getGasEventReserveView();
   } else {
     // ユーザー情報取得
     getGasUserinfo(UID);
@@ -147,8 +147,8 @@ function getGasEventReserveView() {
   // GAS送信データ
   let SendDATA = {
     action: "SelEventReserve",
-    erea: document.getElementById("erea").value,
-    eplace: document.getElementById("eplace1").value,
+//    erea: document.getElementById("erea").value,
+//    eplace: document.getElementById("eplace1").value,
   };
   // postparam固定
   let postparam = {
@@ -203,13 +203,14 @@ function onSubmit() {
       return false;
     } else {
       // Lineメッセージ登録
+      var riyokanaselected = $("#riyokana").children("option:selected");
       var lineMsg1 =
         "イベント予約完了しました。\n会場：" +
         document.getElementById("eplace1").value +
         "\n開始時刻：" +
         document.getElementById("starttime").value +
         "\n利用者：" +
-        document.getElementById("riyokana").textContent +
+        riyokanaselected.text() +
         "\n機種：" +
         document.getElementById("menu").value;
       var lineMsg2 =
