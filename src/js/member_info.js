@@ -10,7 +10,6 @@ window.addEventListener("DOMContentLoaded", function () {
     getGasUserinfo(); //PCからテスト
     //window.alert("LINEから起動してください");
   } else {
-    window.alert("UID:" + profile.userId);
     // ユーザー情報取得
     getGasUserinfo();
   }
@@ -51,7 +50,7 @@ function getGasUserinfo() {
   // GAS送信データ
   var SendDATA = {
     action: "SelUserinfo",
-    useridprofilefield: profile.userId,
+    useridprofilefield: document.getElementById("useridprofilefield").value,
     //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
   };
   // postparam固定
