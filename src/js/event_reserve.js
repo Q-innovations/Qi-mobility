@@ -5,7 +5,27 @@ window.addEventListener("DOMContentLoaded", function () {
   // ユーザ情報有無フラグ(true：データあり)
   const userinfoFlg = false;
   // LINEプロフィール取得
-  var UID = getLineProfile(LINE_LIFF_ID);
+  // liff処理
+  liff
+    //初期化
+    .init({
+      liffId: LINE_LIFF_ID,
+    })
+    .then(() => {
+      // LINEプロフィール取得
+      liff
+        .getProfile()
+        .then(function (profile) {
+          // profile情報セット
+          document.getElementById("useridprofilefield").value = profile.userId;
+          document.getElementById("displaynamefield").value =
+            profile.displayName;
+          UID = profile.userId;
+        })
+        .catch(function (_error) {
+          window.alert("LINEから起動してください。");
+        });
+    });
   // LINE起動確認
   if (!liff.isInClient()) {
     // ユーザー情報取得  //PCからテスト
@@ -26,32 +46,6 @@ window.addEventListener("DOMContentLoaded", function () {
     // getGasEventmenu();
   }
 });
-
-// LINEプロフィール取得
-function getLineProfile(LINE_LIFF_ID) {
-  // liff処理
-  liff
-    //初期化
-    .init({
-      liffId: LINE_LIFF_ID,
-    })
-    .then(() => {
-      // LINEプロフィール取得
-      liff
-        .getProfile()
-        .then(function (profile) {
-          // profile情報セット
-          document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("displaynamefield").value =
-            profile.displayName;
-          return profile.userId;
-        })
-        .catch(function (_error) {
-          window.alert("LINEから起動してください。");
-          return false;
-        });
-    });
-}
 
 // ユーザー情報取得
 function getGasUserinfo(UID) {
@@ -149,7 +143,7 @@ function getGasEventReserveView() {
   let SendDATA = {
     action: "SelEventReserve",
     erea: "福岡",
-//    eplace: document.getElementById("eplace1").value,
+    //    eplace: document.getElementById("eplace1").value,
   };
   // postparam固定
   let postparam = {
