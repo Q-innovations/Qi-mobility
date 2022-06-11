@@ -5,13 +5,17 @@ window.addEventListener("DOMContentLoaded", function () {
   // ユーザ情報有無フラグ(true：データあり)
   const userinfoFlg = false;
   // LINEプロフィール取得
-  if (!getLineProfile(LINE_LIFF_ID)) {
-    // ユーザー情報取得
-    getGasUserinfo(); //PCからテスト
-    //window.alert("LINEから起動してください");
+  var UID = getLineProfile(LINE_LIFF_ID);
+  // LINEプロフィール取得
+  if (!UID) {
+    // ユーザー情報取得  //PCからテスト
+    UID = "U91f9611376221676612af6c1d690a8a5";
+    document.getElementById("useridprofilefield").value = UID;
+    getGasUserinfo(UID);
+    //window.alert("LINEから起動してください2");
   } else {
     // ユーザー情報取得
-    getGasUserinfo();
+    getGasUserinfo(UID);
   }
 });
 
@@ -32,8 +36,8 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-            window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
-            return true;
+          window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
+          return profile.userId;
         })
         .catch(function (_error) {
           window.alert("LINEから起動してください。");
@@ -43,15 +47,14 @@ function getLineProfile(LINE_LIFF_ID) {
 }
 
 // ユーザー情報取得
-function getGasUserinfo() {
+function getGasUserinfo(UID) {
   // GASでデプロイしたWebアプリケーションのURL★各自変更
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
   var SendDATA = {
     action: "SelUserinfo",
-    useridprofilefield: document.getElementById("useridprofilefield").value,
-    //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
+    useridprofilefield: UID,
   };
   // postparam固定
   var postparam = {

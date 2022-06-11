@@ -5,13 +5,18 @@ window.addEventListener("DOMContentLoaded", function () {
   // ユーザ情報有無フラグ(true：データあり)
   const userinfoFlg = false;
   // LINEプロフィール取得
-  if (!getLineProfile(LINE_LIFF_ID)) {
-    // ユーザー情報取得
-    //getGasUserinfo(); //PCからテスト
-    //getGasEventinfo(); //PCからテスト
+  var UID = getLineProfile(LINE_LIFF_ID);
+  // LINEプロフィール取得
+  if (!UID) {
+    // ユーザー情報取得  //PCからテスト
+    UID = "U91f9611376221676612af6c1d690a8a5";
+    document.getElementById("useridprofilefield").value = UID;
+    getGasUserinfo(UID);
+    getGasEventinfo();
+    //getGasEventReserveView();
   } else {
     // ユーザー情報取得
-    getGasUserinfo();
+    getGasUserinfo(UID);
     // イベント情報取得
     getGasEventinfo();
     // 予約残数取得
@@ -38,7 +43,7 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-          return true;
+          return profile.userId;
         })
         .catch(function (_error) {
           window.alert("LINEから起動してください。");
@@ -48,15 +53,14 @@ function getLineProfile(LINE_LIFF_ID) {
 }
 
 // ユーザー情報取得
-function getGasUserinfo() {
+function getGasUserinfo(UID) {
   // GASでデプロイしたWebアプリケーションのURL★各自変更
   var URL =
     "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
   var SendDATA = {
     action: "SelUserinfo",
-    useridprofilefield: document.getElementById("useridprofilefield").value,
-    //useridprofilefield: "U91f9611376221676612af6c1d690a8a5", //PCからテスト
+    useridprofilefield: UID,
   };
   // postparam固定
   var postparam = {
@@ -87,7 +91,7 @@ function getGasUserinfo() {
         let element = document.getElementById("riyokana");
         let options = document.createElement("option");
         if (eval("objUserinfo[0].riyo" + i)) {
-          options.value = eval("objUserinfo[0].riyo" + i);
+          options.value = eval("objUserinfo[0].bd" + i);
           options.text = eval("objUserinfo[0].riyo" + i);
           element.appendChild(options);
         }
@@ -99,11 +103,12 @@ function getGasUserinfo() {
 function getGasEventinfo() {
   // GASでデプロイしたWebアプリケーションのURL★各自変更
   let URL =
-    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
   let SendDATA = {
     action: "SelEvent",
-    erea: document.getElementById("erea").value,
+    erea: "福岡",
+    //    displayflg: "0",  // GASで0固定
   };
   // postparam固定
   let postparam = {
@@ -119,7 +124,7 @@ function getGasEventinfo() {
       //JSONから配列に変換
       const objEvent = data;
       // 会場
-      for (var i = 0; i < objEvent.length; i++) {
+      for (var i = 1; i < objEvent.length; i++) {
         let element1 = document.getElementById("eplace1");
         let element2 = document.getElementById("eplace2");
         let options1 = document.createElement("option");
@@ -138,12 +143,12 @@ function getGasEventinfo() {
 function getGasEventReserveView() {
   // GASでデプロイしたWebアプリケーションのURL★各自変更
   let URL =
-    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
   let SendDATA = {
     action: "SelEventReserve",
     erea: document.getElementById("erea").value,
-    erea: document.getElementById("eplace1").value,
+    eplace: document.getElementById("eplace1").value,
   };
   // postparam固定
   let postparam = {
@@ -186,7 +191,7 @@ function onEplace1() {
 function onSubmit() {
   // LINE起動チェック
   //if (liff.isInClient()) { //PCからテスト
-  if (!liff.isInClient()) {
+  if (liff.isInClient()) {
     window.alert("LINEから起動してください。");
   } else {
     // 利用者登録チェック
@@ -203,17 +208,17 @@ function onSubmit() {
       var lineMsg1 =
         "イベント予約完了しました。\n会場：" +
         document.getElementById("eplace1").value +
-        "\n利用者：" +
-        document.getElementById("riyokana").value +
         "\n開始時刻：" +
         document.getElementById("starttime").value +
+        "\n利用者：" +
+        document.getElementById("riyokana").textContent +
         "\n機種：" +
         document.getElementById("menu").value;
-        var lineMsg2 =
+      var lineMsg2 =
         "PAYPAY(LINEPAY)から以下のQRコードを読み取り、500円お支払いください。";
-        var lineMsg3 =
+      var lineMsg3 =
         "お支払い確認のため支払いIDが記載されているスクリーンショットをLINEへ送付ください。";
-        var lineMsg4 =
+      var lineMsg4 =
         "現地でのQRコード支払い、現金での支払いは釣銭のなきようお願いいたします。";
       // Lineメッセージ送信
       liff
@@ -260,23 +265,27 @@ function onSubmit() {
 function insertEventReserve() {
   // GASでデプロイしたWebアプリケーションのURL★各自変更
   let URL =
-    "https://script.google.com/macros/s/AKfycby5VRXd1fBUMQliiHHTswVzaqc9Pqg0nvKFxCt-oFdgLymGj-tQQAqjgwI-AB2FR-4C/exec";
+    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
   // GAS送信データ
+  var riyokanaselected = $("#riyokana").children("option:selected");
   let SendDATA = {
-    action: "InsEventReserve",
+    action: "InsReserve",
     useridprofilefield: document.getElementById("useridprofilefield").value,
     displaynamefield: document.getElementById("displaynamefield").value,
     tel: document.getElementById("tel").value,
     erea: document.getElementById("erea").value,
     eplace: document.getElementById("eplace2").value,
-    riyokana: document.getElementById("riyokana").value,
     starttime: document.getElementById("starttime").value,
+    riyokana: riyokanaselected.text(),
+    bd: riyokanaselected.val(),
     menu: document.getElementById("menu").value,
   };
   // postparam固定
   let postparam = {
+    "mode": "no-cors",
+    "Content-Type": "application/x-www-form-urlencoded",
+    //"Content-Type": "application/json",
     method: "POST",
-    "Content-Type": "application/json",
     body: JSON.stringify(SendDATA),
   };
   // GAS doPost
