@@ -36,7 +36,6 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-          //window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
           return profile.userId;
         })
         .catch(function (_error) {
