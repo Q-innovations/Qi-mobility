@@ -9,10 +9,10 @@ window.addEventListener("DOMContentLoaded", function () {
   // ユーザー情報取得取得
   if (!UID) {
     // ユーザー情報取得  //PCからテスト
+    window.alert("PC確認モード");
     UID = "U91f9611376221676612af6c1d690a8a5";
     document.getElementById("useridprofilefield").value = UID;
     getGasUserinfo(UID);
-    //window.alert("LINEから起動してください2");
   } else {
     // ユーザー情報取得
     getGasUserinfo(UID);
@@ -36,7 +36,7 @@ function getLineProfile(LINE_LIFF_ID) {
           document.getElementById("useridprofilefield").value = profile.userId;
           document.getElementById("displaynamefield").value =
             profile.displayName;
-          window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
+          //window.alert("useridprofilefield:" + document.getElementById("useridprofilefield").value);
           return profile.userId;
         })
         .catch(function (_error) {
