@@ -7,8 +7,9 @@ window.addEventListener("DOMContentLoaded", function () {
   // LINEプロフィール取得
   var UID = getLineProfile(LINE_LIFF_ID);
   // ユーザー情報取得取得
-  if (!UID) {
+  if (UID === undefined) {
     // ユーザー情報取得  //PCからテスト
+    window.alert("PC確認モード");
     UID = "U91f9611376221676612af6c1d690a8a5";
     document.getElementById("useridprofilefield").value = UID;
     getGasUserinfo(UID);
