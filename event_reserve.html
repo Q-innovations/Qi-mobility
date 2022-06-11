@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
 
-  <title>イベント予約</title>
+  <title>イベント予約 V1.0</title>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
         <select class="form-select form-select-lg mb-3" aria-label="会場" name="eplace1" id="eplace1"
           onchange="onEplace1()"></select>
       </div>
-      (〇：予約可、△：残りわずか、×：予約不可)
+      状況(〇：予約可、△：残りわずか、×：予約不可)
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
@@ -66,12 +66,12 @@
             <tr>
               <th scope="row" class="text-center">7</th>
               <td><label for="title">16：00</label></td>
-              <td><label for="title" id="1600">予約可</label></td>
+              <td><label for="title" id="1600">...データ取得中</label></td>
             </tr>
             <tr>
               <th scope="row" class="text-center">8</th>
               <td><label for="title">16：30</label></td>
-              <td><label for="title" id="1630">残りわずか</label></td>
+              <td><label for="title" id="1630">...データ取得中</label></td>
             </tr>
           </tbody>
         </table>
