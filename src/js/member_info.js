@@ -18,6 +18,8 @@ window.addEventListener("DOMContentLoaded", function () {
         .then(function (profile) {
           // UIDセット
           UID = profile.userId;
+          document.getElementById("useridprofilefield").value = profile.userId;
+          document.getElementById("displaynamefield").value = profile.displayName;
           // ユーザー情報取得
           getGasUserinfo(UID);
         })
@@ -63,6 +65,10 @@ function getGasUserinfo(UID) {
       const objUserinfo = data;
       // ユーザ情報有無フラグ(true：データあり)
       if (objUserinfo.length === 0) {
+        document.getElementById("name").value = null;
+        document.getElementById("namekana").value = null;
+        document.getElementById("tel").value = null;
+        document.getElementById("zip").value = null;
         userinfoFlg = false;
       } else {
         userinfoFlg = true;

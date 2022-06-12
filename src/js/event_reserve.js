@@ -18,6 +18,8 @@ window.addEventListener("DOMContentLoaded", function () {
         .then(function (profile) {
           // UIDセット
           UID = profile.userId;
+          document.getElementById("useridprofilefield").value = profile.userId;
+          document.getElementById("displaynamefield").value = profile.displayName;
           // ユーザー情報取得
           getGasUserinfo(UID);
           // イベント情報取得

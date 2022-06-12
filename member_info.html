@@ -28,22 +28,22 @@
       <div class="form-group">
         <label for="name">代表者氏名</label>
         <input type="text" id="name" name="name" maxlength="15" class="size-input-name" placeholder="(例)モビ　太郎"
-          title="15文字以内" required autofocus />
+          title="15文字以内" value="...データ取得中" required autofocus />
       </div>
       <div class="form-group">
         <label for="namekana">代表者かな</label>
         <input type="text" id="namekana" name="namekana" maxlength="15" class="size-input-name" placeholder="(例)もび　たろう"
-          title="ひらがな15文字以内" pattern="[\u3041-\u3096]*" required onblur="onNamekana()" />
+          title="ひらがな15文字以内" value="...データ取得中" pattern="[\u3041-\u3096]*" required onblur="onNamekana()" />
       </div>
       <div class="form-group">
         <label for="tel">携帯番号　</label>
         <input type="text" id="tel" name="tel" maxlength="11" class="size-input-tel" placeholder="(例)09012345678"
-          title="数字10桁11桁" pattern="\d{10,11}" required />
+          title="数字10桁11桁" value="...データ取得中" pattern="\d{10,11}" required />
       </div>
       <div class="form-group">
         <label for="zip">郵便番号　</label>
         <input type="text" id="zip" name="zip" maxlength="7" class="size-input-zip" placeholder="(例)1234567"
-          title="数字7桁" pattern="\d{7}" required onkeyup="AjaxZip3.zip2addr(this,'','adress1','adress1');" />
+          title="数字7桁" pattern="\d{7}" value="...データ取得中" required onkeyup="AjaxZip3.zip2addr(this,'','adress1','adress1');" />
       </div>
       <div class="form-group">
         <input type="text" id="adress1" name="adress1" maxlength="50" class="form-control"
