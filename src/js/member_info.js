@@ -34,10 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
     UID = "U91f9611376221676612af6c1d690a8a5";
     document.getElementById("useridprofilefield").value = UID;
     getGasUserinfo(UID);
-  } else {
-    // ユーザー情報取得
-    getGasUserinfo(UID);
-  }
+  } 
 });
 
 // ユーザー情報取得

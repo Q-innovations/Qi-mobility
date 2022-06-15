@@ -19,7 +19,8 @@ window.addEventListener("DOMContentLoaded", function () {
           // UIDセット
           UID = profile.userId;
           document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("displaynamefield").value = profile.displayName;
+          document.getElementById("displaynamefield").value =
+            profile.displayName;
           // ユーザー情報取得
           getGasUserinfo(UID);
           // イベント情報取得
@@ -190,6 +191,11 @@ function onSubmit() {
       window.alert("会員情報登録より利用者を登録してください。");
       return false;
     }
+    // 予約重複・最新予約数チェック
+    if (!chkEventReserve()) {
+//      window.location.reload();
+      return false;
+    }
     // イベント予約登録
     if (!insertEventReserve()) {
       window.alert("イベント予約登録に失敗しました。");
@@ -225,8 +231,10 @@ function onSubmit() {
           },
           {
             type: "image",
-            originalContentUrl: "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
-            previewImageUrl: "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
+            originalContentUrl:
+              "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
+            previewImageUrl:
+              "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
           },
           {
             type: "text",
@@ -251,6 +259,52 @@ function onSubmit() {
   return false;
 }
 
+// 予約重複・最新予約数チェック
+function chkEventReserve() {
+  // GASでデプロイしたWebアプリケーションのURL★各自変更
+  let URL =
+    "https://script.google.com/macros/s/AKfycbzobHL6Bo3DxjUCNJKDXb7_0xvk0LUjU5M8BdPpid-szbeIaHlFcy5GoJgIkNyedKRj/exec";
+  // GAS送信データ
+  let SendDATA = {
+    action: "ChkEventReserve",
+    useridprofilefield: document.getElementById("useridprofilefield").value,
+    erea: document.getElementById("erea").value,
+    eplace: document.getElementById("eplace2").value,
+    starttime: document.getElementById("starttime").value,
+    riyokana: riyokanaselected.text(),
+  };
+  // postparam固定
+  let postparam = {
+    method: "POST",
+    "Content-Type": "application/json",
+    body: JSON.stringify(SendDATA),
+  };
+  // GAS doPost
+  fetch(URL, postparam)
+    .then((response) => response.json())
+    /*成功した処理*/
+    .then((data) => {
+      //JSONから配列に変換
+      const objChkEve = data;
+      // ユーザ重複チェック
+      if (objChkEve[1].重複フラグ !== 0) {
+        window.alert(
+          "イベント予約登録に失敗しました。同じ時間帯での同じ利用者登録はできません。"
+        );
+        return false;
+      }
+      // 最新予約数チェック
+      if (objChkEve[1].予約数フラグ !== 0) {
+        window.alert(
+          "イベント予約登録に失敗しました。指定された時間帯の予約数に達しました。"
+        );
+        return false;
+      }
+      return true;
+    });
+  return true;
+}
+
 // イベント予約登録
 function insertEventReserve() {
   // GASでデプロイしたWebアプリケーションのURL★各自変更
@@ -272,7 +326,7 @@ function insertEventReserve() {
   };
   // postparam固定
   let postparam = {
-    "mode": "no-cors",
+    mode: "no-cors",
     "Content-Type": "application/x-www-form-urlencoded",
     //"Content-Type": "application/json",
     method: "POST",
