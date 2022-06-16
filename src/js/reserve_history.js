@@ -19,7 +19,8 @@ window.addEventListener("DOMContentLoaded", function () {
           // UIDセット
           UID = profile.userId;
           document.getElementById("useridprofilefield").value = profile.userId;
-          document.getElementById("displaynamefield").value = profile.displayName;
+          document.getElementById("displaynamefield").value =
+            profile.displayName;
           // 予約情報取得
           getGasReserve(UID);
         })
@@ -34,7 +35,7 @@ window.addEventListener("DOMContentLoaded", function () {
     UID = "U91f9611376221676612af6c1d690a8a5";
     document.getElementById("useridprofilefield").value = UID;
     getGasReserve(UID);
-  } 
+  }
 });
 
 // 予約情報取得
@@ -62,6 +63,34 @@ function getGasReserve(UID) {
       const objUserinfo = data;
       // JSONからdatatablesへ格納
 
-      }
+      // dataTable設定
+      $.extend($.fn.dataTable.defaults, {
+        language: {
+          url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json",
+        },
+      });
+      $("#data-tabley").DataTable({
+        // 件数切替機能 無効
+        lengthChange: false,
+        // 検索機能 無効
+        searching: true,
+        // ソート機能 無効
+        ordering: false,
+        // 情報表示 無効
+        info: false,
+        // ページング機能 無効
+        paging: false,
+        // データ
+        /*
+    data: json,
+    columns: [
+      { data : '#' },
+      { data : '会場' },
+      { data : '時間' },
+      { data : '利用者' },
+      { data : '機種' },
+    ],
+    */
+      });
     });
 }
