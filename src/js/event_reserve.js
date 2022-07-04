@@ -192,10 +192,10 @@ function onSubmit() {
       return false;
     }
     // 予約重複・最新予約数チェック
-    if (!chkEventReserve()) {
+//    if (!chkEventReserve()) {
 //      window.location.reload();
-      return false;
-    }
+//      return false;
+//    }
     // イベント予約登録
     if (!insertEventReserve()) {
       window.alert("イベント予約登録に失敗しました。");
