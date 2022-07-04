@@ -1,213 +1,145 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-      crossorigin="anonymous"
-    />
-    <!-- jQuery -->
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
-      crossorigin="anonymous"
-    ></script>
-    <!-- Bootstrap Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-      crossorigin="anonymous"
-    ></script>
-    <!-- jQuery-Validation-Engine -->
-    <script
-      src="lib/jQuery-Validation-Engine_2.6.4/js/jquery-1.8.2.min.js"
-      type="text/javascript"
-    ></script>
-    <script
-      src="lib/jQuery-Validation-Engine_2.6.4/js/jquery.validationEngine.min.js"
-      type="text/javascript"
-      charset="utf-8"
-    ></script>
-    <script
-      src="lib/jQuery-Validation-Engine_2.6.4/js/jquery.validationEngine-ja.js"
-      type="text/javascript"
-      charset="utf-8"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="lib/jQuery-Validation-Engine_2.6.4/css/validationEngine.jquery.css"
-      charset="utf-8"
-      type="text/css"
-    />
-    <!-- LINE liff -->
-    <script
-      charset="utf-8"
-      src="https://static.line-scdn.net/liff/edge/2/sdk.js"
-    ></script>
-    <!-- src -->
-    <script src="src/js/common.js" charset="UTF-8"></script>
-    <script src="src/js/event_reserve.js" charset="UTF-8"></script>
 
-    <title>イベント予約</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
 
-  <body>
-    <div class="container">
-      <form action="#" method="POST" id="inputform" name="inputform">
-        <div class="form-group">
-          <label for="title">≪予約情報照会≫</label>
-        </div>
-        <div class="form-group">
-          <label for="eplace1">会場</label>
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label="会場"
-            name="eplace1"
-            id="eplace1"
-            onblur="onbEplace1();"
-          >
-            <option value="1">2022年06月26日(日)リバーサイド東櫛原</option>
-            <option value="2">2022年10月XX日(土)＋ｙｏｕ</option>
-          </select>
-        </div>
+  <title>イベント予約 V1.0</title>
+</head>
+
+<body>
+  <div class="container">
+    <form action="#" method="POST" id="inputform">
+      <div class="form-group">
+        <label for="title">≪予約状況≫</label>
+      </div>
+      <div class="form-group">
+        <label for="eplace1">会場</label>
+        <select class="form-select form-select-lg mb-3" aria-label="会場" name="eplace1" id="eplace1"
+          onchange="onEplace1()"></select>
+      </div>
+      状況(〇：予約可、△：残りわずか、×：予約不可)
+      <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">開始時刻</th>
-              <th scope="col">予約状況</th>
+              <th class="text-center" style="width: 5%">#</th>
+              <th class="text-center" style="width: 35%">開始時刻</th>
+              <th class="text-center" style="width: 60%">状況</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">1</th>
+              <th scope="row" class="text-center">1</th>
               <td><label for="title">13：00</label></td>
-              <td><label for="title" id="1300">残りわずか</label></td>
+              <td><label for="title" id="1300">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">2</th>
+              <th scope="row" class="text-center">2</th>
               <td><label for="title">13：30</label></td>
-              <td><label for="title" id="1330">予約可</label></td>
+              <td><label for="title" id="1330">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">3</th>
+              <th scope="row" class="text-center">3</th>
               <td><label for="title">14：00</label></td>
-              <td><label for="title" id="1400">予約不可</label></td>
+              <td><label for="title" id="1400">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">4</th>
+              <th scope="row" class="text-center">4</th>
               <td><label for="title">14：30</label></td>
-              <td><label for="title" id="1430">残りわずか</label></td>
+              <td><label for="title" id="1430">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">5</th>
+              <th scope="row" class="text-center">5</th>
               <td><label for="title">15：00</label></td>
-              <td><label for="title" id="1500">予約可</label></td>
+              <td><label for="title" id="1500">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">6</th>
+              <th scope="row" class="text-center">6</th>
               <td><label for="title">15：30</label></td>
-              <td><label for="title" id="1530">予約不可</label></td>
+              <td><label for="title" id="1530">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">7</th>
+              <th scope="row" class="text-center">7</th>
               <td><label for="title">16：00</label></td>
-              <td><label for="title" id="1600">予約可</label></td>
+              <td><label for="title" id="1600">...データ取得中</label></td>
             </tr>
             <tr>
-              <th scope="row">8</th>
+              <th scope="row" class="text-center">8</th>
               <td><label for="title">16：30</label></td>
-              <td><label for="title" id="1630">残りわずか</label></td>
+              <td><label for="title" id="1630">...データ取得中</label></td>
             </tr>
           </tbody>
         </table>
-        <div class="form-group">
-          <label for="title">≪予約会場、利用者、開始時刻を入力ください≫</label>
-        </div>
-        <input
-          type="hidden"
-          id="displaynamefield"
-          name="displaynamefield"
-          value="displaynamefield"
-        />
-        <input type="hidden" id="tel" name="tel" value="tel" />
-        <!-- エリアはとりあえず福岡固定 -->
-        <input type="hidden" id="erea" name="erea" value="福岡" />
-        <div class="form-group">
-          <label for="eplace2">会場</label>
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label="会場"
-            name="eplace2"
-            id="eplace2"
-            disabled
-          >
-            <option value="1">2022年06月26日(日)リバーサイド東櫛原</option>
-            <option value="2">2022年10月XX日(土)＋ｙｏｕ</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="riyokana">利用者かな</label>
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label="利用者かな"
-            name="riyokana"
-          >
-            <option value="1">もび　たろう</option>
-            <option value="2">もび　はなこ</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="starttime">開始時刻</label>
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label="開始時刻"
-            name="starttime"
-            id="starttime"
-          >
-            <option value="1300">13：00</option>
-            <option value="1330">13：30</option>
-            <option value="1400">14：00</option>
-            <option value="1430">14：30</option>
-            <option value="1500">15：00</option>
-            <option value="1530">15：30</option>
-            <option value="1600">16：00</option>
-            <option value="1630">16：30</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="menu">機種</label>
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label="機種"
-            name="menu"
-            id="menu"
-          >
-            <option value="Segway(ハンド)">Segway(ハンド)</option>
-            <option value="Segway(フット)">Segway(フット)</option>
-            <option value="Kintone(オフロード)">Kintone(オフロード)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <!--                 <input type="submit" id="submit-btn" value="登録" class="btn btn-primary"> -->
-          <input
-            type="button"
-            id="submit-btn"
-            value="登録"
-            onclick="OnPost();"
-            class="btn btn-primary"
-          />
-        </div>
-      </form>
-    </div>
-  </body>
+      </div>
+      <div class="form-group">
+        <label for="title">≪予約会場、利用者、開始時刻を入力ください≫</label>
+      </div>
+      <div class="d-none form-group">
+        <label for="useridprofilefield">会員ID　　</label>
+        <input type="text" id="useridprofilefield" name="useridprofilefield" maxlength="15" class="size-input-name" value=""/>
+      </div>
+      <div class="form-group">
+        <input type="hidden" id="displaynamefield" name="displaynamefield" value=""/>
+      </div>
+      <input type="hidden" id="tel" name="tel" value=""/>
+      <!-- エリアはとりあえず福岡固定 -->
+      <input type="hidden" id="erea" name="erea" value="福岡" />
+      <div class="form-group">
+        <label for="eplace2">会場</label>
+        <select class="form-select form-select-lg mb-3" aria-label="会場" name="eplace2" id="eplace2" required
+          disabled></select>
+      </div>
+      <div class="form-group">
+        <label for="riyokana">利用者かな</label>
+        <select class="form-select form-select-lg mb-3" aria-label="利用者かな" id="riyokana" name="riyokana"
+          required></select>
+      </div>
+      <div class="form-group">
+        <label for="starttime">開始時刻</label>
+        <select class="form-select form-select-lg mb-3" aria-label="開始時刻" name="starttime" id="starttime" required>
+          <option value="13：00">13：00</option>
+          <option value="13：30">13：30</option>
+          <option value="14：00">14：00</option>
+          <option value="14：30">14：30</option>
+          <option value="15：00">15：00</option>
+          <option value="15：30">15：30</option>
+          <option value="16：00">16：00</option>
+          <option value="16：30">16：30</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="menu">機種</label>
+        <select class="form-select form-select-lg mb-3" aria-label="機種" name="menu" id="menu" required>
+          <option value="Segway(ハンド)">Segway(ハンド)</option>
+          <option value="Segway(フット)">Segway(フット)</option>
+          <option value="Kintone(オフロード)">Kintone(オフロード)</option>
+          <option value="Kintone(キックボード)">Kintone(キックボード)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="button" id="submit-btn" value="登録" onclick="return onSubmit()" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+  <!-- LINE liff -->
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <!-- src -->
+  <script src="src/js/event_reserve.js" charset="UTF-8"></script>
+</body>
+
 </html>

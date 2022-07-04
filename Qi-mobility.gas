@@ -1,54 +1,15 @@
 function doPost(e) {
 
+  //ログ設定Logシートへ出力
+  Logger = BetterLog.useSpreadsheet('1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0');
+
   var postParam = JSON.parse(e.postData.getDataAsString());
   switch (postParam.action) {//actionパラメーターの内容によって処理を分岐
-
-    //会員情報取得API
-    case "SelUserinfo":
-      {
-        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
-        var SHEET_NAME = 'QUERY';
-        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
-        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
-        var JsonDATA = JSON.parse(e.postData.getDataAsString());
-//        var keyword = JsonDATA.useridprofilefield;
-//        var values = Sheet.getRange(1, 1).setValue('=QUERY(userinfo!A:V,"WHERE A = \'' + keyword + '\'")');
-        var useridprofilefield = JsonDATA.useridprofilefield;
-        var tel = JsonDATA.tel;
-        var values = Sheet.getRange(1, 1).setValue('=QUERY(userinfo!A:V,"WHERE A = \'' + useridprofilefield + '\' OR E =  \'' + tel + '\'")');
-        var values = Sheet.getDataRange().getValues();
-        const data = [];
-
-        //シートの入力内容をオブジェクトに詰め替え
-        for (let i = 0; i < values.length; i++) {
-          //ヘッダー部(1行目)はスキップ
-          if (i === 0) continue;
-          const param = {};
-          for (let j = 0; j < values[i].length; j++) {
-            param[values[0][j]] = values[i][j];
-          }
-          data.push(param);
-        }
-        return obj2txtout(data);
-/*
-        //返却情報を生成
-        const result = ContentService.createTextOutput();
-
-        //Mime TypeをJSONに設定
-        result.setMimeType(ContentService.MimeType.JSON);
-
-        //JSONテキストをセットする
-        result.setContent(JSON.stringify(data));
-
-        return result;
-*/
-      }
-      break;
 
     //会員情報登録API
     case "InsUserinfo":
       {
-        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SPREAD_SHEET_ID = '1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0';
         var SHEET_NAME = 'userinfo';
         var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
         var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
@@ -65,69 +26,55 @@ function doPost(e) {
           "'" + JsonDATA.tel,
           "'" + JsonDATA.zip,
           JsonDATA.adress1,
-          JsonDATA.adress2,
+          "'" + JsonDATA.adress2,
           JsonDATA.riyo1,
-          JsonDATA.bd1,
+          "'" + JsonDATA.bd1,
           JsonDATA.riyo2,
-          JsonDATA.bd2,
+          "'" + JsonDATA.bd2,
           JsonDATA.riyo3,
-          JsonDATA.bd3,
+          "'" + JsonDATA.bd3,
           JsonDATA.riyo4,
-          JsonDATA.bd4,
+          "'" + JsonDATA.bd4,
           JsonDATA.riyo5,
-          JsonDATA.bd5,
+          "'" + JsonDATA.bd5,
           JsonDATA.riyo6,
-          JsonDATA.bd6,
+          "'" + JsonDATA.bd6,
           0,
-          now
+          now,
+          0
         ]);
+        Logger.log("InsUserinfo:UID:" + JsonDATA.useridprofilefield);
         return obj2txtout({ message: "success!", });
       }
       break;
 
-    //イベント取得API
-    case "SelEvent":
+    //会員情報削除API
+    case "DelUserinfo":
       {
-        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
-        var SHEET_NAME = 'event';
+        var SPREAD_SHEET_ID = '1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0';
+        var SHEET_NAME = 'userinfo';
         var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
         var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        //パラメータ取得
         var JsonDATA = JSON.parse(e.postData.getDataAsString());
-        var erea = JsonDATA.erea;
-        var values = Sheet.getRange(1, 1).setValue('=QUERY(event!A:B,"WHERE A = \'' + erea + '\'")');
-        const data = [];
+        var keyword = JsonDATA.useridprofilefield;
+        //行番号検索
+        var arrData = Sheet.getDataRange().getValues();
+        var _ = Underscore.load();
+        var arrTrans = _.zip.apply(_, arrData);
 
-        //シートの入力内容をオブジェクトに詰め替え
-        for (let i = 0; i < values.length; i++) {
-          //ヘッダー部(1行目)はスキップ
-          if (i === 0) continue;
-          const param = {};
-          for (let j = 0; j < values[i].length; j++) {
-            param[values[0][j]] = values[i][j];
-          }
-          data.push(param);
-        }
-        return obj2txtout(data);
-/*
-        //返却情報を生成
-        const result = ContentService.createTextOutput();
-
-        //Mime TypeをJSONに設定
-        result.setMimeType(ContentService.MimeType.JSON);
-
-        //JSONテキストをセットする
-        result.setContent(JSON.stringify(data));
-
-        return result;
-*/
+        //データ削除
+        Sheet.deleteRow((arrTrans[0].indexOf(keyword) + 1));
+        Logger.log("DelUserinfo:UID:" + keyword + ":行番号:" + (arrTrans[0].indexOf(keyword) + 1));
+        return obj2txtout({ message: "success!", });
       }
       break;
 
-    //予約状況取得API
-    case "SelEventReserve":
+    //会員情報取得API
+    case "SelUserinfo":
       {
-        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
-        var SHEET_NAME = 'QUERY';
+        var SPREAD_SHEET_ID = '1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0';
+        var SHEET_NAME = 'QUERY_userinfo';
         var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
         var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
         var JsonDATA = JSON.parse(e.postData.getDataAsString());
@@ -146,48 +93,99 @@ function doPost(e) {
           }
           data.push(param);
         }
+        Logger.log("SelUserinfo:UID:" + keyword);
         return obj2txtout(data);
-/*
-        //返却情報を生成
-        const result = ContentService.createTextOutput();
+      }
+      break;
 
-        //Mime TypeをJSONに設定
-        result.setMimeType(ContentService.MimeType.JSON);
+    //イベント取得API
+    case "SelEvent":
+      {
+        var SPREAD_SHEET_ID = '1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0';
+        var SHEET_NAME = 'QUERY_event';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        var erea = JsonDATA.erea;
+        var values = Sheet.getRange(1, 1).setValue('=QUERY(event!A:C,"WHERE A = \'' + erea + '\' AND C = 0")');
+        var values = Sheet.getDataRange().getValues();
+        const data = [];
 
-        //JSONテキストをセットする
-        result.setContent(JSON.stringify(data));
+        //シートの入力内容をオブジェクトに詰め替え
+        for (let i = 0; i < values.length; i++) {
+          //ヘッダー部(1行目)はスキップ
+          //if (i === 0) continue;
+          const param = {};
+          for (let j = 0; j < values[i].length; j++) {
+            param[values[0][j]] = values[i][j];
+          }
+          data.push(param);
+        }
+        Logger.log("SelEvent:erea:" + erea);
+        return obj2txtout(data);
+      }
+      break;
 
-        return result;
-*/
+    //予約残数取得API
+    case "SelEventReserve":
+      {
+        var SPREAD_SHEET_ID = '1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0';
+        var SHEET_NAME = 'QUERY_eventreserve';
+        var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
+        var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+        var JsonDATA = JSON.parse(e.postData.getDataAsString());
+        //var erea = JsonDATA.erea;
+        //var eplace = JsonDATA.eplace;
+        //var values = Sheet.getRange(1, 1).setValue('=QUERY(QUERY_eventreserve!A:D,"WHERE A = \'' + erea + '\' AND C =  \'' + display + '\'")');
+        //var values = Sheet.getDataRange().getValues();
+        var values = sheet.getRange("B2:D9").getValues();
+
+        const data = [];
+
+        //シートの入力内容をオブジェクトに詰め替え
+        for (let i = 0; i < values.length; i++) {
+          //ヘッダー部(1行目)はスキップ
+          //if (i === 0) continue;
+          const param = {};
+          for (let j = 0; j < values[i].length; j++) {
+            param[values[0][j]] = values[i][j];
+          }
+          data.push(param);
+        }
+        Logger.log("SelEventReserve:erea:" + erea + ":eplace:" + eplace);
+        return obj2txtout(data);
       }
       break;
 
     //予約登録API
-    case "InsEventReserve":
+    case "InsReserve":
       {
-        var SPREAD_SHEET_ID = '1AYqAEGMZIvX8FFDItb_QbGXdmUCL3_kDtOrzDiaXp1I';
+        var SPREAD_SHEET_ID = '1rdIQBlB9ffsbAyBiw_x1jCu4Kxk0CcQTAlAfTPkwyP0';
         var SHEET_NAME = 'reserve';
         var ss = SpreadsheetApp.openById(SPREAD_SHEET_ID);
         var Sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
-        //var Sheet = SpreadsheetApp.getActiveSheet();
         var JsonDATA = JSON.parse(e.postData.getDataAsString());
         var date = new Date();
         var now = Utilities.formatDate(date, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss')
-
+　　　　　
         Sheet.appendRow([
           JsonDATA.useridprofilefield,
+          JsonDATA.displaynamefield,
+          "'" + JsonDATA.tel,
+          JsonDATA.erea,
           JsonDATA.eplace,
-          JsonDATA.starttime,
-          JsonDATA.riyo,
+          "'" + JsonDATA.starttime,
+          JsonDATA.riyokana,
           "'" + JsonDATA.bd,
-          "'" + JsonDATA.menu,
+          JsonDATA.menu,
           0,
           now
         ]);
+        Logger.log("InsReserve:UID:" + JsonDATA.useridprofilefield + ":riyokana:" + JsonDATA.riyokana
+         + ":starttime:" + JsonDATA.starttime + ":menu:" + JsonDATA.menu);
         return obj2txtout({ message: "success!", });
       }
       break;
-
 
     default:
       {
@@ -197,6 +195,7 @@ function doPost(e) {
       break;
 
   }
+
 }
 
 function obj2txtout(obj) {
@@ -204,17 +203,6 @@ function obj2txtout(obj) {
   output.setMimeType(ContentService.MimeType.JSON);
   output.setContent(JSON.stringify(obj));
   return output;
-}
-
-function execDoPost() {
-  //eの作成
-  var e = {
-    postData: {
-      "action": "insertUserInfo",
-      "useridprofilefield": "userId"
-    }
-  };
-  doPost(e);
 }
 
 function doGet() {
@@ -225,21 +213,6 @@ function doGet() {
     + "　2列目：" + Data[DataIndex][1]
     + "　3列目：" + Data[DataIndex][2]
     + "　4列目：" + Data[DataIndex][3]
-    + "　5列目：" + Data[DataIndex][4]
-    + "　6列目：" + Data[DataIndex][5]
-    + "　7列目：" + Data[DataIndex][6]
-    + "　8列目：" + Data[DataIndex][7]
-    + "　9列目：" + Data[DataIndex][8]
-    + "　10列目：" + Data[DataIndex][9]
-    + "　11列目：" + Data[DataIndex][10]
-    + "　12列目：" + Data[DataIndex][11]
-    + "　13列目：" + Data[DataIndex][12]
-    + "　14列目：" + Data[DataIndex][13]
-    + "　15列目：" + Data[DataIndex][14]
-    + "　16列目：" + Data[DataIndex][15]
-    + "　17列目：" + Data[DataIndex][16]
-    + "　18列目：" + Data[DataIndex][17]
-    + "　19列目：" + Data[DataIndex][18]
-    + "　20列目：" + Data[DataIndex][19];
+    + "　5列目：" + Data[DataIndex][4];
   return obj2txtout({ message: ReturnTxt, });
 }
