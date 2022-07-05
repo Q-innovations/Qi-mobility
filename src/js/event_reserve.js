@@ -232,9 +232,9 @@ function onSubmit() {
           {
             type: "image",
             originalContentUrl:
-              "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
+              "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR-PAYPAY.jpg",
             previewImageUrl:
-              "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR%E3%82%B3%E3%83%BC%E3%83%89.jpeg",
+              "https://q-innovations.github.io/Qi-mobility/src/jpeg/QR-PAYPAY.jpg",
           },
           {
             type: "text",
